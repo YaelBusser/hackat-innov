@@ -1,0 +1,46 @@
+.header {
+    backdrop-filter: blur(12px);
+    background-color: #00000070;
+}
+
+.white-link {
+    color: white;
+}
+
+.white-link:hover, .white-link.active-link{
+    color: #46FFBDFF;
+}
+
+body {
+    background-color: #fafafa;
+    font-family: 'Nunito', sans-serif;
+}
+
+.bg {
+    background-image: url(/public/img/home.jpg);
+    background-size: cover;
+}
+
+.fullContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.cardRadius {
+    border-radius: 10px 10px 10px 10px;
+    background: #ffffffe3;
+    width: 90%;
+    max-width: 450px;
+    padding: 10px;
+    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.member {
+    list-style-type: none;
+    font-size: 2em;
+    text-align: left;
+}

@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  front:
+    build: .
+    container_name: front
+    environment:
+      - MVC_SERVER=192.168.10.15
+      - MVC_DB=AP3_BD_HACKATHON_INITIAL
+      - MVC_USER=exemple-2
+      - MVC_TOKEN=m6MIbZx0
+      - MVC_DEBUG=false
+    command: php -S 0.0.0.0:9000
+    volumes:
+      - .:/var/www/html/
+    restart: unless-stopped
+    # ports:
+    # - "9000:9000"
