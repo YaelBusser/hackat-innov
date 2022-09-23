@@ -31,11 +31,6 @@
             <?php } ?>
             <?php
             if (isset($error)) {
-                $_SESSION["errorHackathonIsOpen"] = true;
-            }else{
-                $_SESSION["errorHackathonIsOpen"] = false;
-            }
-            if (isset($error)) {
                 ?>
                 <div class="error"><p><?= $error; ?></p></div>
             <?php } ?>

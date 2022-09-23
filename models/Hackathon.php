@@ -29,7 +29,7 @@ class Hackathon extends SQL
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function getHackathonIsOpen(int $idHackathon){
+    public function getHackathonIsOpen($idHackathon){
         $stmt = $this->getPdo()->prepare("SELECT MAX(nbEquipMax) AS nbEquipMax, COUNT(INSCRIRE.idequipe) AS nbEquip, INSCRIRE.dateinscription, dateFinInscription  FROM `HACKATHON` INNER JOIN INSCRIRE ON INSCRIRE.idhackathon = HACKATHON.idhackathon WHERE HACKATHON.idhackathon = ?;
 ");
         $stmt->execute([$idHackathon]);

@@ -65,6 +65,11 @@ class Equipe extends WebController
         if (!$idh) {
             $this->redirect("/");
         }
+        $hackathonIsOpen = $this->hackathon->getHackathonIsOpen($idh);
+        $dateNow = $this->hackathon->getDateNow();
+        if (($hackathonIsOpen['nbEquip'] >= $hackathonIsOpen['nbEquipMax']) || ($dateNow['date'] >= $hackathonIsOpen['dateFinInscription'])) {
+            $this->redirect("/");
+        }
         $erreur = "";
         if (!empty($idh) && !empty($nom) && !empty($lien) && !empty($login) && !empty($password)) {
             // Création de l'équipe

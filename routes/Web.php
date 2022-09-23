@@ -2,13 +2,13 @@
 
 namespace routes;
 
-use views\global\home;
+use controllers\ApiDoc;
 use controllers\Equipe;
 use controllers\Hackathon;
 use controllers\Main;
-use controllers\ApiDoc;
 use routes\base\Route;
 use utils\SessionHelpers;
+use views\global\home;
 
 
 class Web
@@ -28,10 +28,9 @@ class Web
         Route::Add('/', [$this->main, 'home']);
         Route::Add('/about', [$this->main, 'about']);
         Route::Add('/login', [$this->equipe, 'login']);
-        if (!$_SESSION["errorHackathonIsOpen"]) {
-            Route::Add('/join', [$this->hackathon, 'join']);
-            Route::Add('/create-team', [$this->equipe, 'create']);
-        }
+        Route::Add('/join', [$this->hackathon, 'join']);
+        Route::Add('/create-team', [$this->equipe, 'create']);
+
         // Liste des routes de la partie API
         Route::Add('/sample/', [$this->apiDoc, 'liste']);
         Route::Add('/sample/hackathons', [$this->apiDoc, 'listeHackathons']);
