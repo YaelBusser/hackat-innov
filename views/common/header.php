@@ -41,7 +41,7 @@ use routes\base\Route;
                 <li class="nav-item"><a href="/me" class="nav-link white-link <?= Route::isActivePath('/me', 'active-link') ?>">Mon profil</a></li>
             <?php } ?>
 
-            <li class="nav-item"><a href="/sample/" class="nav-link white-link <?= Route::isActivePath('/sample/', 'active-link') ?>"">🔐 API</a></li>
+            <li class="nav-item"><a href="/connexionApi" class="nav-link white-link <?= Route::isActivePath('/connexionApi', 'active-link') ?>"">🔐 API</a></li>
         </ul>
     </header>
 </div>

@@ -30,13 +30,16 @@ class Web
         Route::Add('/login', [$this->equipe, 'login']);
         Route::Add('/join', [$this->hackathon, 'join']);
         Route::Add('/create-team', [$this->equipe, 'create']);
-
         // Liste des routes de la partie API
-        Route::Add('/sample/', [$this->apiDoc, 'liste']);
-        Route::Add('/sample/hackathons', [$this->apiDoc, 'listeHackathons']);
-        Route::Add('/sample/ateliers', [$this->apiDoc, 'listeAteliers']);
-        Route::Add('/sample/membres', [$this->apiDoc, 'listeMembres']);
-        Route::Add('/sample/equipes', [$this->apiDoc, 'listeEquipes']);
+
+        Route::Add('/connexionApi', [$this->apiDoc, 'connexionApi']);
+        if (SessionHelpers::isLogin()) {
+            Route::Add('/sample/', [$this->apiDoc, 'liste']);
+            Route::Add('/sample/hackathons', [$this->apiDoc, 'listeHackathons']);
+            Route::Add('/sample/ateliers', [$this->apiDoc, 'listeAteliers']);
+            Route::Add('/sample/membres', [$this->apiDoc, 'listeMembres']);
+            Route::Add('/sample/equipes', [$this->apiDoc, 'listeEquipes']);
+        }
 
         if (SessionHelpers::isLogin()) {
             // Ici seront les routes nécessitant un accès protégés

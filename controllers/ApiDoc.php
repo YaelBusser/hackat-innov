@@ -24,7 +24,9 @@ class ApiDoc extends WebController
         $this->membres = new Membre();
         $this->hackatons = new Hackathon();
     }
-
+    function connexionApi(): string{
+        return Template::render("views/apidoc/connexionApi.php");
+    }
     function liste(): string
     {
         return Template::render("views/apidoc/liste.php");
