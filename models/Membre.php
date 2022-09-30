@@ -16,16 +16,24 @@ class Membre extends SQL
      * @param string $idequipe
      * @return bool|array
      */
-    public function getByIdEquipe(String $idequipe): bool|array
+    public function getByIdEquipe(string $idequipe): bool|array
     {
         $stmt = $this->getPdo()->prepare("SELECT * FROM EQUIPE e LEFT JOIN MEMBRE m on e.idequipe = m.idequipe WHERE m.idequipe = ?");
         $stmt->execute([$idequipe]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function addToEquipe(String $nom, String $prenom, String $idE): bool
+    public function addToEquipe(string $nom, string $prenom, string $idE): bool
     {
         $stmt = $this->getPdo()->prepare("INSERT INTO MEMBRE(nom, prenom, idequipe, email) VALUES (?, ?, ?, '')");
         return $stmt->execute([$nom, $prenom, $idE]);
+    }
+
+    public function getAdminByLogin(string $nom)
+    {
+        $stmt = $this->getPdo()->prepare("SELECT * FROM ADMINISTRATEUR WHERE nom = ? LIMIT 1;
+");
+        $stmt->execute([$nom]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 }

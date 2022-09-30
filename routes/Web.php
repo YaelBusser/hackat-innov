@@ -32,13 +32,15 @@ class Web
         Route::Add('/create-team', [$this->equipe, 'create']);
         // Liste des routes de la partie API
 
-        Route::Add('/connexionApi', [$this->apiDoc, 'connexionApi']);
-        if (SessionHelpers::isLogin()) {
+        if (isset($_SESSION["admin"])) {
             Route::Add('/sample/', [$this->apiDoc, 'liste']);
             Route::Add('/sample/hackathons', [$this->apiDoc, 'listeHackathons']);
             Route::Add('/sample/ateliers', [$this->apiDoc, 'listeAteliers']);
             Route::Add('/sample/membres', [$this->apiDoc, 'listeMembres']);
             Route::Add('/sample/equipes', [$this->apiDoc, 'listeEquipes']);
+            Route::Add("/deconnectionAdmin", [$this->apiDoc, "logOutApi"]);
+        } else {
+            Route::Add('/connexionApi', [$this->apiDoc, 'connexionApi']);
         }
 
         if (SessionHelpers::isLogin()) {

@@ -26,6 +26,11 @@ class SessionHelpers
         unset($_SESSION['LOGIN']);
     }
 
+    static function logOutApi(): void
+    {
+        unset($_SESSION["admin"]);
+    }
+
     static function getConnected()
     {
         if (SessionHelpers::isLogin()) {

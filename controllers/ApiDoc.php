@@ -6,12 +6,12 @@ use controllers\base\WebController;
 use models\Equipe;
 use models\Hackathon;
 use models\Membre;
+use utils\SessionHelpers;
 use utils\Template;
 
 /**
  * Ensemble de méthode en lien avec l'API.
  */
-
 class ApiDoc extends WebController
 {
     private Equipe $equipes;
@@ -24,9 +24,37 @@ class ApiDoc extends WebController
         $this->membres = new Membre();
         $this->hackatons = new Hackathon();
     }
-    function connexionApi(): string{
-        return Template::render("views/apidoc/connexionApi.php");
+
+    function connexionApi(): string
+    {
+        $errorApi = "";
+        if (isset($_POST["btnAdmin"])) {
+            if (!empty(["login"]) && !empty($_POST["password"])) {
+                $login = htmlspecialchars($_POST["login"]);
+                $pwd = $_POST["password"];
+                $connection = $this->membres->getAdminByLogin($login);
+                if (password_verify($pwd, $connection["motpasse"])) {
+                    $_SESSION["admin"] = $connection;
+                    #echo $_SESSION["admin"]["nom"]; Cela permet de récupérer toutes les infos des users.
+
+                    $this->redirect("/sample/");
+                } else {
+                    $errorApi = "Le mot de passe est incorrecte !";
+                }
+
+            } else {
+                $errorApi = "Veuillez remplir tous les champs !";
+            }
+        }
+        return Template::render("views/apidoc/connexionApi.php", array("errorApi" => $errorApi));
     }
+
+    function logOutApi()
+    {
+        SessionHelpers::logOutApi();
+        $this->redirect("/");
+    }
+
     function liste(): string
     {
         return Template::render("views/apidoc/liste.php");
@@ -37,7 +65,7 @@ class ApiDoc extends WebController
         return Template::render("views/apidoc/hackathon.php", array('data' => $this->hackatons->getAll()));
     }
 
-    function listeMembres(String $idequipe = ""): string
+    function listeMembres(string $idequipe = ""): string
     {
         $lequipe = null;
         if ($idequipe != "") {
@@ -51,7 +79,7 @@ class ApiDoc extends WebController
         return Template::render("views/apidoc/membre.php", array('data' => $data, 'lequipe' => $lequipe));
     }
 
-    function listeEquipes(String $idh = ""): string
+    function listeEquipes(string $idh = ""): string
     {
         $hackathon = null;
         if ($idh != "") {
