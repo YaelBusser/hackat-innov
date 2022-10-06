@@ -36,4 +36,9 @@ class Membre extends SQL
         $stmt->execute([$nom]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
+    public function getByIdEquipeAndIdMembre(int $idEquipe, int $idMembre){
+        $rqt = $this->getPdo()->prepare("SELECT * FROM EQUIPE e LEFT JOIN MEMBRE m on e.idequipe = m.idequipe WHERE m.idequipe = ? AND m.idmembre = ?");
+        $rqt->execute([$idEquipe, $idMembre]);
+        return $rqt->fetch(\PDO::FETCH_ASSOC);
+    }
 }

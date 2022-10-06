@@ -30,8 +30,9 @@ class Equipe extends WebController
         $connected = SessionHelpers::getConnected();
         $relatedHackathon = $this->hackathon->getHackathonForTeamId($connected['idequipe']);
         $membres = $this->membre->getByIdEquipe($connected['idequipe']);
+        $lemembre = $this->membre->getByIdEquipeAndIdMembre($connected["idequipe"], 7);
 
-        return Template::render("views/equipe/me.php", array('hackathon' => $relatedHackathon, 'connected' => $connected, "membres" => $membres));
+        return Template::render("views/equipe/me.php", array('hackathon' => $relatedHackathon, 'connected' => $connected, "membres" => $membres, "lemembre" => $lemembre));
     }
 
     /**

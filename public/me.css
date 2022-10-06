@@ -1,0 +1,73 @@
+.member i {
+    font-size: 20px;
+}
+
+.icon-edit {
+    color: rgb(92, 184, 92);
+    transition: ease-in-out 0.1s;
+}
+
+.icon-edit:hover {
+    color: rgba(92, 184, 92, 0.5);
+}
+
+.icon-delete {
+    color: rgb(217, 83, 79);
+    transition: ease-in-out 0.1s;
+}
+
+.icon-delete:hover {
+    color: rgba(217, 83, 79, 0.5);
+}
+.btn-modal{
+    cursor: pointer;
+}
+.modal-Edit{
+    width: 100%;
+    padding: 30px;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px 10px 10px 10px;
+    height: 100%;
+    opacity: 0;
+    z-index: -1;
+    transition: ease-in-out 0.2s;
+}
+.modal-Edit.active{
+    opacity: 1;
+    z-index: 2;
+}
+.modal-Delete{
+    width: 100%;
+    padding: 30px;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px 10px 10px 10px;
+    height: 100%;
+    opacity: 0;
+    z-index: -1;
+    transition: ease-in-out 0.2s;
+}
+.modal-Delete.active{
+    opacity: 1;
+    z-index: 2;
+}
+.close-modal{
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    color: rgb(217, 83, 79);
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+}
+.close-modal:hover{
+    color: rgba(217, 83, 79, 0.8);
+}
+.button{
+    border: none;
+}
