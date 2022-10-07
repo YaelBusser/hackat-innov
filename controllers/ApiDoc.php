@@ -52,7 +52,7 @@ class ApiDoc extends WebController
     function logOutApi()
     {
         SessionHelpers::logOutApi();
-        $this->redirect("/");
+        $this->redirect("/connexionApi");
     }
 
     function liste(): string

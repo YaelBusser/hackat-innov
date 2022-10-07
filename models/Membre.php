@@ -41,4 +41,8 @@ class Membre extends SQL
         $rqt->execute([$idEquipe, $idMembre]);
         return $rqt->fetch(\PDO::FETCH_ASSOC);
     }
+    public function deleteMembre(int $idEquipe, int $idMembre){
+        $rqt = $this->getPdo()-> prepare("UPDATE MEMBRE SET idequipe = null WHERE idequipe = ? AND idmembre = ?;");
+        $rqt->execute([$idEquipe, $idMembre]);
+    }
 }

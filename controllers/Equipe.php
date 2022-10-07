@@ -3,6 +3,7 @@
 namespace controllers;
 
 use controllers\base\WebController;
+use http\Header;
 use models\Membre;
 use models\Hackathon;
 use utils\SessionHelpers;
@@ -30,9 +31,22 @@ class Equipe extends WebController
         $connected = SessionHelpers::getConnected();
         $relatedHackathon = $this->hackathon->getHackathonForTeamId($connected['idequipe']);
         $membres = $this->membre->getByIdEquipe($connected['idequipe']);
-        $lemembre = $this->membre->getByIdEquipeAndIdMembre($connected["idequipe"], 7);
 
-        return Template::render("views/equipe/me.php", array('hackathon' => $relatedHackathon, 'connected' => $connected, "membres" => $membres, "lemembre" => $lemembre));
+        return Template::render("views/equipe/me.php", array('hackathon' => $relatedHackathon, 'connected' => $connected, "membres" => $membres));
+    }
+
+    function meEdit($id)
+    {
+        $connected = SessionHelpers::getConnected();
+        $membres = $this->membre->getByIdEquipeAndIdMembre($connected['idequipe'], $id);
+        return Template::render("views/equipe/editMembre.php", array("membres" => $membres), false);
+    }
+
+    function meDelete($id)
+    {
+        $connected = SessionHelpers::getConnected();
+        $membres = $this->membre->getByIdEquipeAndIdMembre($connected['idequipe'], $id);
+        return Template::render("views/equipe/deleteMembre.php", array("membres" => $membres), false);
     }
 
     /**

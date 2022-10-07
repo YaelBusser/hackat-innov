@@ -26,24 +26,31 @@
             <ul>
                 <?php foreach ($membres as $m) { ?>
                     <li class="member">🧑‍💻 <?= "{$m['nom']} {$m['prenom']}" ?>
-                        <span class="btn-modal modal-trigger-edit"><i class="bi bi-pen-fill icon-edit"></i></span>
-                        <span class="btn-modal modal-trigger-delete"><i class="bi bi-trash-fill icon-delete"></i></span>
+                        <span class="btn-modal modal-trigger-edit"
+                              onclick="getMembreEdit(<?= $m['idmembre']; ?>)">
+                            <i class="bi bi-pen-fill icon-edit"></i>
+                        </span>
+                        <span class="btn-modal modal-trigger-delete"
+                              onclick="getMembreDelete(<?= $m["idmembre"]; ?>)">
+                            <i class="bi bi-trash-fill icon-delete"></i>
+                        </span>
                     </li>
+                    <div class="modal-Edit" id="modal-Edit">
+                        <div class="close-modal modal-trigger-edit">
+                            <i class="bi bi-x-circle-fill"></i>
+                        </div>
+                        <h1>Modifications</h1>
+                        <p id="info-edit"></p>
+                    </div>
+                    <div class="modal-Delete">
+                        <div class="close-modal modal-trigger-delete">
+                            <i class="bi bi-x-circle-fill"></i>
+                        </div>
+                        <h1>Suppression</h1>
+                        <p id="info-delete"></p>
+                    </div>
                 <?php } ?>
             </ul>
-            <div class="modal-Edit">
-                <div class="close-modal modal-trigger-edit">
-                    <i class="bi bi-x-circle-fill"></i>
-                </div>
-                <h1>Modifications du profil <?= $lemembre["nom"] . " " . $lemembre["prenom"]; ?></h1>
-            </div>
-            <div class="modal-Delete">
-                <div class="close-modal modal-trigger-delete">
-                    <i class="bi bi-x-circle-fill"></i>
-                </div>
-                <h1>Suppression</h1>
-                <p>COCUCI8HCIHCSFCD</p>
-            </div>
             <form method="post" class="row g-1" action="/membre/add">
                 <div class="col">
                     <input required type="text" placeholder="Nom" name="nom" class="form-control"/>
@@ -59,6 +66,7 @@
     </div>
 </div>
 <script>
+
     const modalEdit = document.querySelector(".modal-Edit");
     const modalTriggersEdit = document.querySelectorAll(".modal-trigger-edit");
     modalTriggersEdit.forEach(triggerEdit => triggerEdit.addEventListener("click", toggleModalEdit));
@@ -73,5 +81,21 @@
 
     function toggleModalDelete() {
         modalDelete.classList.toggle("active");
+    }
+
+    function getMembreEdit(idmembre) {
+        fetch("/editMembre/" + idmembre)
+            .then((response) => response.text())
+            .then((datas) => {
+                document.getElementById("info-edit").innerHTML = datas;
+            });
+    }
+
+    function getMembreDelete(idmembre) {
+        fetch("/deleteMembre/" + idmembre)
+            .then((response) => response.text())
+            .then((datas) => {
+                document.getElementById("info-delete").innerHTML = datas;
+            });
     }
 </script>
