@@ -49,6 +49,32 @@ class Equipe extends WebController
         return Template::render("views/equipe/deleteMembre.php", array("membres" => $membres), false);
     }
 
+    function meDeleteLeMembre($id)
+    {
+        $connected = SessionHelpers::getConnected();
+        $this->membre->deleteMembre($connected['idequipe'], $id);
+        $this->redirect("/me");
+    }
+
+    function getMembreSupp()
+    {
+        $connected = SessionHelpers::getConnected();
+        $membresSupp = $this->membre->getMembreSupp($connected["idequipe"]);
+        return Template::render("views/equipe/membreSupp.php", array("membresSupp" => $membresSupp), false);
+    }
+
+    function backMembreInEquipe($idMembre)
+    {
+        $this->membre->backMembreInEquipe($idMembre);
+        $this->redirect("/me");
+    }
+
+    function deleteFromEquipe($idMembre)
+    {
+        $this->membre->deleteFromEquipe($idMembre);
+        $this->redirect("/me");
+    }
+
     /**
      * Méthode d'ajout d'un membre. Appelé depuis la vue de profil
      * @param $nom

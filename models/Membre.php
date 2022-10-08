@@ -42,7 +42,20 @@ class Membre extends SQL
         return $rqt->fetch(\PDO::FETCH_ASSOC);
     }
     public function deleteMembre(int $idEquipe, int $idMembre){
-        $rqt = $this->getPdo()-> prepare("UPDATE MEMBRE SET idequipe = null WHERE idequipe = ? AND idmembre = ?;");
+        $rqt = $this->getPdo()-> prepare("UPDATE MEMBRE SET idancienneequipe = idequipe, idequipe = null, date_supp_equipe = NOW() WHERE idequipe = ? AND idmembre = ?;");
         $rqt->execute([$idEquipe, $idMembre]);
+    }
+    public function getMembreSupp($idEquipe){
+        $rqt = $this->getPdo()-> prepare("SELECT * FROM MEMBRE WHERE idancienneequipe = ? ORDER BY date_supp_equipe DESC;");
+        $rqt->execute([$idEquipe]);
+        return $rqt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function backMembreInEquipe(int $idMembre){
+        $rqt = $this->getPdo()->prepare("UPDATE MEMBRE SET idequipe = 12, idancienneequipe = NULL, date_supp_equipe = NULL WHERE idmembre = ?");
+        $rqt->execute([$idMembre]);
+    }
+    public function deleteFromEquipe(int $idMembre){
+        $rqt = $this->getPdo()->prepare("DELETE FROM MEMBRE WHERE idmembre = ?");
+        $rqt->execute([$idMembre]);
     }
 }

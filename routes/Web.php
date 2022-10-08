@@ -32,8 +32,6 @@ class Web
         Route::Add('/create-team', [$this->equipe, 'create']);
         // Liste des routes de la partie API
 
-        Route::Add('/editMembre/{id}', [$this->equipe, 'meEdit']);
-        Route::Add('/deleteMembre/{id}', [$this->equipe, 'meDelete']);
 
         if (isset($_SESSION["admin"])) {
             Route::Add('/sample/', [$this->apiDoc, 'liste']);
@@ -51,6 +49,12 @@ class Web
             Route::Add('/logout', [$this->equipe, 'logout']);
             Route::Add('/me', [$this->equipe, 'me']);
             Route::Add('/membre/add', [$this->equipe, 'addMembre']);
+            Route::Add('/editMembre/{id}', [$this->equipe, 'meEdit']);
+            Route::Add('/deleteMembre/{id}', [$this->equipe, 'meDelete']);
+            Route::Add("/deleteLeMembre/{id}", [$this->equipe, "meDeleteLeMembre"]);
+            Route::Add("/membreSupp/", [$this->equipe, "getMembreSupp"]);
+            Route::Add("/backToEquipe/{id}", [$this->equipe, "backMembreInEquipe"]);
+            Route::Add("/deleteFromEquipe/{id}", [$this->equipe, "deleteFromEquipe"]);
         }
     }
 }

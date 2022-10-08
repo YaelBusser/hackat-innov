@@ -51,18 +51,16 @@
                     </div>
                 <?php } ?>
             </ul>
-            <form method="post" class="row g-1" action="/membre/add">
-                <div class="col">
+            <div class="formAjouter">
+                <form method="post" class="row g-1" action="/membre/add" style="width: 100%; display: flex; justify-content: center; gap: 10px">
                     <input required type="text" placeholder="Nom" name="nom" class="form-control"/>
-                </div>
-                <div class="col">
                     <input required type="text" placeholder="Prénom" name="prenom" class="form-control"/>
-                </div>
-                <div class="col">
-                    <input type="submit" value="Ajouter" class="btn btn-success d-block"/>
-                </div>
-            </form>
+                    <input type="submit" value="Ajouter" class="btn btn-success d-block form-control"/>
+                </form>
+            </div>
         </div>
+        <p class="membres-supp" onclick="getMembreSupp()">Afficher les membres supprimés</p>
+        <div id="info-membres-sup"></div>
     </div>
 </div>
 <script>
@@ -96,6 +94,14 @@
             .then((response) => response.text())
             .then((datas) => {
                 document.getElementById("info-delete").innerHTML = datas;
+            });
+    }
+
+    function getMembreSupp() {
+        fetch("/membreSupp/")
+            .then((response) => response.text())
+            .then((datas) => {
+                document.getElementById("info-membres-sup").innerHTML = datas;
             });
     }
 </script>
