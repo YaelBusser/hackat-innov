@@ -23,10 +23,10 @@ class Membre extends SQL
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function addToEquipe(string $nom, string $prenom, string $idE): bool
+    public function addToEquipe(int $idEquipe, string $nom, string $prenom, string $email, string $telephone, string $datenaissance, string $portfolio)
     {
-        $stmt = $this->getPdo()->prepare("INSERT INTO MEMBRE(nom, prenom, idequipe, email) VALUES (?, ?, ?, '')");
-        return $stmt->execute([$nom, $prenom, $idE]);
+        $stmt = $this->getPdo()->prepare("INSERT INTO MEMBRE(idequipe, nom, prenom, email, telephone, datenaissance, lienportfolio) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$idEquipe, $nom, $prenom, $email, $telephone, $datenaissance, $portfolio]);
     }
 
     public function getAdminByLogin(string $nom)

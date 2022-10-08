@@ -109,4 +109,12 @@ class Equipe extends SQL
             return null;
         }
     }
+    public function modifEquipe(string $nomEquipe, string $login, string $lienPrototype, int $nbParticipants, string $password, int $idEquipe){
+        $rqt = $this->getPdo()->prepare("UPDATE EQUIPE SET nomequipe = ?, login = ?, lienprototype = ?, nbparticipants = ?, password = ? WHERE idequipe = ?");
+        $rqt->execute([$nomEquipe, $login, $lienPrototype, $nbParticipants, $password, $idEquipe]);
+    }   
+    public function modifEquipeSansMdp(string $nomEquipe, string $login, string $lienPrototype, int $nbParticipants, int $idEquipe){
+        $rqt = $this->getPdo()->prepare("UPDATE EQUIPE SET nomequipe = ?, login = ?, lienprototype = ?, nbparticipants = ? WHERE idequipe = ?");
+        $rqt->execute([$nomEquipe, $login, $lienPrototype, $nbParticipants, $idEquipe]);
+    }
 }

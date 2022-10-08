@@ -81,11 +81,21 @@ class Equipe extends WebController
      * @param $prenom
      * @return void
      */
-    function addMembre($nom = "", $prenom = ""): void
+    function addMembre($nom, $prenom, $email, $tel, $dateNaissance, $portfolio): void
     {
-        if (!empty($nom) && !empty($prenom)) {
+        if (!empty($nom) && !empty($prenom) && !empty($email) && !empty($tel) && !empty($dateNaissance)) {
+            $nom = htmlspecialchars($nom);
+            $prenom = htmlspecialchars($prenom);
+            $email = htmlspecialchars($email);
+            $tel = htmlspecialchars($tel);
+            $dateNaissance = htmlspecialchars($dateNaissance);
             $connected = SessionHelpers::getConnected();
-            $this->membre->addToEquipe($nom, $prenom, $connected['idequipe']);
+            if (!empty($portfolio)) {
+                $portfolio = htmlspecialchars($portfolio);
+                $this->membre->addToEquipe($connected['idequipe'], $nom, $prenom, $email, $tel, $dateNaissance, $portfolio);
+            } else {
+                $this->membre->addToEquipe($connected['idequipe'], $nom, $prenom, $email, $tel, $dateNaissance, "");
+            }
         }
 
         $this->redirect('/me');
@@ -157,7 +167,34 @@ class Equipe extends WebController
 
         return Template::render("views/equipe/login.php", array("erreur" => $erreur));
     }
-
+    function editEquipe($nom = "", $login = "", $proto = "", $participants = "", $mdp = "", $mdp2 = ""){
+        if(isset($_POST["btnModifierEquipe"])){
+            $nom = htmlspecialchars($nom);
+            $login = htmlspecialchars($login);
+            $proto =  htmlspecialchars($proto);
+            $participants = htmlspecialchars($participants);
+            if(!empty($nom) && !empty($login) && !empty($proto) && !empty($participants)){
+                if(!empty($mdp) && !empty($mdp)){
+                    if($mdp == $mdp2){
+                        $mdp = password_hash($mdp, PASSWORD_BCRYPT);
+                        $this->equipe->modifEquipe($nom, $login, $proto, $participants, $mdp, $_SESSION["LOGIN"]["idequipe"]);
+                    }else{
+                        $errorEditEquipe = "Les mots de passes doivent être identiques !";
+                    }
+                }else{
+                    $_SESSION["LOGIN"]["nomequipe"] = $nom;
+                    $_SESSION["LOGIN"]["lienprototype"] = $proto;
+                    $_SESSION["LOGIN"]["nbparticipants"] = $participants;
+                    $_SESSION["LOGIN"]["login"] = $login;
+                    $this->equipe->modifEquipeSansMdp($nom, $login, $proto, $participants, $_SESSION["LOGIN"]["idequipe"]);
+                }
+            }else{
+                $errorEditEquipe = "Les champs ne doivent pas être vides !";
+            }
+        }
+        $this->redirect("/me");
+        return Template::render("views/equipe/me.php", array("errorEditEquipe" => $errorEditEquipe));
+    }
     /**
      * Déconnexion de la plateforme
      * @return void

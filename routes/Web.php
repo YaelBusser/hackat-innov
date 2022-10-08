@@ -55,6 +55,7 @@ class Web
             Route::Add("/membreSupp/", [$this->equipe, "getMembreSupp"]);
             Route::Add("/backToEquipe/{id}", [$this->equipe, "backMembreInEquipe"]);
             Route::Add("/deleteFromEquipe/{id}", [$this->equipe, "deleteFromEquipe"]);
+            Route::Add("/editEquipe", [$this->equipe, "editEquipe"]);
         }
     }
 }
