@@ -17,6 +17,11 @@
         </div>
 
         <div class="card-actions">
+            <?php
+                if($hackathon != null){
+            ?>
+            <a href="/leaveHackathon" class="btn btn-danger btn-small">Quitter l'évènement</a>
+            <?php } ?>
             <a href="/logout" class="btn btn-danger btn-small">Déconnexion</a>
         </div>
         <div id="modal-Edit-Equipe" class="modal-Edit-Equipe">
@@ -24,7 +29,7 @@
                 <i class="bi bi-x-circle-fill"></i>
             </div>
             <h1>Modifications</h1>
-            <form method="POST" action="/editEquipe">
+            <form method="POST" id="formEditProfile">
                 <div class="formEditEquipe">
                     <div>
                         <p><label for="nom">Nom</label></p>
@@ -47,6 +52,14 @@
                                type="number"
                                value="<?= $_SESSION["LOGIN"]["nbparticipants"]; ?>">
                     </div>
+                   <?php
+
+                   ?>
+                    <div>
+                        <p><label for="mdpActuel">Mot de passe actuel</label></p>
+                        <input class="form-control inputEditEquipe" name="mdpActuel" id="mdpActuel" type="password"
+                               value="">
+                    </div>
                     <div>
                         <p><label for="mdp">Mot de passe</label></p>
                         <input class="form-control inputEditEquipe" name="mdp" id="mdp" type="password"
@@ -57,13 +70,9 @@
                         <input class="form-control inputEditEquipe" name="mdp2" id="mdp2" type="password"
                                value="">
                     </div>
-                    <input type="submit" value="Modifier" name="btnModifierEquipe"
+                    <input type="button" onclick="editEquipe()" value="Modifier" name="btnModifierEquipe"
                            class="btn btn-success d-block form-control btnModiferEquipe" id="btnEditEquipe"/>
-                    <?php
-                    if (isset($errorEditEquipe)) {
-                        echo $errorEditEquipe;
-                    }
-                    ?>
+                    <div id="msgErrorEditProfile"></div>
                 </div>
             </form>
         </div>
@@ -121,6 +130,27 @@
     </div>
 </div>
 <script>
+    // Modification de l'équipe par ajax
+    function editEquipe() {
+        const data = new URLSearchParams();
+        for (const pair of new FormData(document.getElementById("formEditProfile"))) {
+            data.append(pair[0], pair[1]);
+        }
+        fetch("/editEquipe", {
+            method: 'post',
+            body: data,
+        })
+            .then((response) => response.text())
+            .then((datas) => {
+                if (datas) {
+                    document.getElementById("msgErrorEditProfile").innerHTML = datas;
+
+                } else {
+                    location.reload();
+                }
+            });
+    }
+
     const modalEditEquipe = document.querySelector(".modal-Edit-Equipe");
     const modalTriggersEditEquipe = document.querySelectorAll(".modal-trigger-edit-equipe");
     modalTriggersEditEquipe.forEach(triggerEditEquipe => triggerEditEquipe.addEventListener("click", toggleModalEditEquipe));

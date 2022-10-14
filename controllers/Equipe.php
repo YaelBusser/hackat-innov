@@ -30,6 +30,7 @@ class Equipe extends WebController
     {
         $connected = SessionHelpers::getConnected();
         $relatedHackathon = $this->hackathon->getHackathonForTeamId($connected['idequipe']);
+        $_SESSION["hackathonActuel"] = $relatedHackathon;
         $membres = $this->membre->getByIdEquipe($connected['idequipe']);
 
         return Template::render("views/equipe/me.php", array('hackathon' => $relatedHackathon, 'connected' => $connected, "membres" => $membres));
@@ -167,34 +168,43 @@ class Equipe extends WebController
 
         return Template::render("views/equipe/login.php", array("erreur" => $erreur));
     }
-    function editEquipe($nom = "", $login = "", $proto = "", $participants = "", $mdp = "", $mdp2 = ""){
-        if(isset($_POST["btnModifierEquipe"])){
+
+    function editEquipe($nom = "", $login = "", $proto = "", $participants = "", $mdp = "", $mdp2 = "", $mdpActuel = "")
+    {
+        $errorEditEquipe = "";
+        if (isset($nom)) {
             $nom = htmlspecialchars($nom);
             $login = htmlspecialchars($login);
-            $proto =  htmlspecialchars($proto);
+            $proto = htmlspecialchars($proto);
             $participants = htmlspecialchars($participants);
-            if(!empty($nom) && !empty($login) && !empty($proto) && !empty($participants)){
-                if(!empty($mdp) && !empty($mdp)){
-                    if($mdp == $mdp2){
-                        $mdp = password_hash($mdp, PASSWORD_BCRYPT);
-                        $this->equipe->modifEquipe($nom, $login, $proto, $participants, $mdp, $_SESSION["LOGIN"]["idequipe"]);
-                    }else{
-                        $errorEditEquipe = "Les mots de passes doivent être identiques !";
+            if (!empty($nom) && !empty($login) && !empty($proto) && !empty($participants)) {
+                if (!empty($mdpActuel)) {
+                    if (password_verify($mdpActuel, $_SESSION["LOGIN"]["password"])) {
+                        if (!empty($mdp) && !empty($mdp)) {
+                            if ($mdp == $mdp2) {
+                                $mdp = password_hash($mdp, PASSWORD_BCRYPT);
+                                $this->equipe->modifEquipe($nom, $login, $proto, $participants, $mdp, $_SESSION["LOGIN"]["idequipe"]);
+                                $_SESSION["LOGIN"]["password"] = $mdp;
+                            } else {
+                                $errorEditEquipe = "Les mots de passes doivent être identiques !";
+                            }
+
+                        }
                     }
-                }else{
+                } else {
                     $_SESSION["LOGIN"]["nomequipe"] = $nom;
                     $_SESSION["LOGIN"]["lienprototype"] = $proto;
                     $_SESSION["LOGIN"]["nbparticipants"] = $participants;
                     $_SESSION["LOGIN"]["login"] = $login;
                     $this->equipe->modifEquipeSansMdp($nom, $login, $proto, $participants, $_SESSION["LOGIN"]["idequipe"]);
                 }
-            }else{
+            } else {
                 $errorEditEquipe = "Les champs ne doivent pas être vides !";
             }
         }
-        $this->redirect("/me");
-        return Template::render("views/equipe/me.php", array("errorEditEquipe" => $errorEditEquipe));
+        return Template::render("views/equipe/editEquipe.php", array("error" => $errorEditEquipe), false);
     }
+
     /**
      * Déconnexion de la plateforme
      * @return void

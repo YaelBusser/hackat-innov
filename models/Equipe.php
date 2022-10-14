@@ -117,4 +117,8 @@ class Equipe extends SQL
         $rqt = $this->getPdo()->prepare("UPDATE EQUIPE SET nomequipe = ?, login = ?, lienprototype = ?, nbparticipants = ? WHERE idequipe = ?");
         $rqt->execute([$nomEquipe, $login, $lienPrototype, $nbParticipants, $idEquipe]);
     }
+    public function leaveHackathon(int $idEquipe, int $idHackathon){
+        $rqt = $this->getPdo()->prepare("DELETE FROM INSCRIRE WHERE idequipe = ? AND idhackathon = ?");
+        $rqt->execute([$idEquipe, $idHackathon]);
+    }
 }

@@ -55,7 +55,7 @@ class Membre extends SQL
         $rqt->execute([$idMembre]);
     }
     public function deleteFromEquipe(int $idMembre){
-        $rqt = $this->getPdo()->prepare("DELETE FROM MEMBRE WHERE idmembre = ?");
-        $rqt->execute([$idMembre]);
+        $rqt = $this->getPdo()->prepare("DELETE FROM MEMBRE WHERE idmembre = ? AND idancienneequipe = ? ");
+        $rqt->execute([$idMembre, $_SESSION["LOGIN"]["idequipe"]]);
     }
 }

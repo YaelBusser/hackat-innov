@@ -11,6 +11,7 @@ class Hackathon extends WebController
     public function __construct()
     {
         $this->hackathon = new \models\Hackathon();
+        $this->equipe = new \models\Equipe();
     }
     /**
      * Méthode qui permet à une équipe de joindre un hackathon
@@ -38,5 +39,11 @@ class Hackathon extends WebController
         $this->hackathon->joinHackathon($idh, SessionHelpers::getConnected()['idequipe']);
 
         $this->redirect('/me');
+    }
+    function leaveHackathon(){
+        $idEquipe = $_SESSION["LOGIN"]["idequipe"];
+        $idHackthon = $_SESSION["hackathonActuel"]["idhackathon"];
+        $this->equipe->leaveHackathon($idEquipe, $idHackthon);
+        $this->redirect("/me");
     }
 }
