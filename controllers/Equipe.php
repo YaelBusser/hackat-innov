@@ -169,7 +169,7 @@ class Equipe extends WebController
         return Template::render("views/equipe/login.php", array("erreur" => $erreur));
     }
 
-    function editEquipe($nom = "", $login = "", $proto = "", $participants = "", $mdp = "", $mdp2 = "", $mdpActuel = "")
+    function editEquipe($nom = "", $login = "", $proto = "", $participants = "", $mdpActuel = "", $mdp = "", $mdp2 = "", )
     {
         $errorEditEquipe = "";
         if (isset($nom)) {
@@ -178,9 +178,12 @@ class Equipe extends WebController
             $proto = htmlspecialchars($proto);
             $participants = htmlspecialchars($participants);
             if (!empty($nom) && !empty($login) && !empty($proto) && !empty($participants)) {
+                if(empty($mdpActuel) && !empty($mdp) && !empty($mdp2)){
+                    $errorEditEquipe = "Vous devez d'abord renseigner votre mot de passe actuel !";
+                }
                 if (!empty($mdpActuel)) {
                     if (password_verify($mdpActuel, $_SESSION["LOGIN"]["password"])) {
-                        if (!empty($mdp) && !empty($mdp)) {
+                        if (!empty($mdp) && !empty($mdp2)) {
                             if ($mdp == $mdp2) {
                                 $mdp = password_hash($mdp, PASSWORD_BCRYPT);
                                 $this->equipe->modifEquipe($nom, $login, $proto, $participants, $mdp, $_SESSION["LOGIN"]["idequipe"]);
@@ -188,8 +191,9 @@ class Equipe extends WebController
                             } else {
                                 $errorEditEquipe = "Les mots de passes doivent être identiques !";
                             }
-
                         }
+                    }else{
+                        $errorEditEquipe = "Le mot de passe actuel est incorrecte !";
                     }
                 } else {
                     $_SESSION["LOGIN"]["nomequipe"] = $nom;

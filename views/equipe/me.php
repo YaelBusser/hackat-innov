@@ -49,7 +49,7 @@
                     <div>
                         <p><label for="participants">Nombre de participants</label></p>
                         <input class="form-control inputEditEquipe" name="participants" id="participants"
-                               type="number"
+                               type="number" min="1" max="<?= $hackathon["nbEquipMax"]; ?>"
                                value="<?= $_SESSION["LOGIN"]["nbparticipants"]; ?>">
                     </div>
                    <?php
@@ -144,7 +144,6 @@
             .then((datas) => {
                 if (datas) {
                     document.getElementById("msgErrorEditProfile").innerHTML = datas;
-
                 } else {
                     location.reload();
                 }

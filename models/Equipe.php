@@ -73,10 +73,13 @@ class Equipe extends SQL
         $stmt = $this->getPdo()->prepare('SELECT * FROM EQUIPE WHERE login = ? LIMIT 1');
         $stmt->execute([$login]);
         $equipe = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        if (password_verify($password, $equipe['password'])) {
-            return $equipe;
-        } else {
+        if ($equipe) {
+            if (password_verify($password, $equipe['password'])) {
+                return $equipe;
+            } else {
+                return null;
+            }
+        }else{
             return null;
         }
     }
@@ -109,15 +112,21 @@ class Equipe extends SQL
             return null;
         }
     }
-    public function modifEquipe(string $nomEquipe, string $login, string $lienPrototype, int $nbParticipants, string $password, int $idEquipe){
+
+    public function modifEquipe(string $nomEquipe, string $login, string $lienPrototype, int $nbParticipants, string $password, int $idEquipe)
+    {
         $rqt = $this->getPdo()->prepare("UPDATE EQUIPE SET nomequipe = ?, login = ?, lienprototype = ?, nbparticipants = ?, password = ? WHERE idequipe = ?");
         $rqt->execute([$nomEquipe, $login, $lienPrototype, $nbParticipants, $password, $idEquipe]);
-    }   
-    public function modifEquipeSansMdp(string $nomEquipe, string $login, string $lienPrototype, int $nbParticipants, int $idEquipe){
+    }
+
+    public function modifEquipeSansMdp(string $nomEquipe, string $login, string $lienPrototype, int $nbParticipants, int $idEquipe)
+    {
         $rqt = $this->getPdo()->prepare("UPDATE EQUIPE SET nomequipe = ?, login = ?, lienprototype = ?, nbparticipants = ? WHERE idequipe = ?");
         $rqt->execute([$nomEquipe, $login, $lienPrototype, $nbParticipants, $idEquipe]);
     }
-    public function leaveHackathon(int $idEquipe, int $idHackathon){
+
+    public function leaveHackathon(int $idEquipe, int $idHackathon)
+    {
         $rqt = $this->getPdo()->prepare("DELETE FROM INSCRIRE WHERE idequipe = ? AND idhackathon = ?");
         $rqt->execute([$idEquipe, $idHackathon]);
     }

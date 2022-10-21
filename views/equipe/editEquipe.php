@@ -1,5 +1,5 @@
 <?php
 if (!empty($error)) {
-    echo $error;
+    echo "<div class='msgError'>".$error."</div>";
 }
 ?>

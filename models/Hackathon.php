@@ -28,7 +28,11 @@ class Hackathon extends SQL
         $stmt->execute([$idE]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
-
+    public function getInscrireByIdEquipe($idE, $idhackathon){
+        $rqt = $this->getPdo()->prepare("SELECT idhackathon, idequipe FROM INSCRIRE WHERE idequipe = ? AND idhackathon = ?");
+        $rqt->execute([$idE, $idhackathon]);
+        return $rqt->fetch(\PDO::FETCH_ASSOC);
+    }
     public function getHackathonIsOpen($idHackathon){
         $stmt = $this->getPdo()->prepare("SELECT MAX(nbEquipMax) AS nbEquipMax, COUNT(INSCRIRE.idequipe) AS nbEquip, INSCRIRE.dateinscription, dateFinInscription  FROM `HACKATHON` INNER JOIN INSCRIRE ON INSCRIRE.idhackathon = HACKATHON.idhackathon WHERE HACKATHON.idhackathon = ?;
 ");

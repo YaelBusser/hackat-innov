@@ -38,10 +38,21 @@
                 <?php
                 if (($hackathonIsOpen['nbEquip'] < $hackathonIsOpen['nbEquipMax']) && ($dateNow['date'] < $hackathonIsOpen['dateFinInscription'])) {
                     ?>
-                    <a class="btn bg-green m-2 button-home"
-                       href="/join?idh=<?= $hackathon['idhackathon'] ?>">Rejoindre</a>
-                    <a class="btn bg-green m-2 button-home" href="/create-team?idh=<?= $hackathon['idhackathon'] ?>">Créer
-                        mon équipe</a>
+                    <?php
+                    if (!$rejoindre) {
+                        ?><?php
+                        if (isset($_SESSION["LOGIN"])) {
+                            ?><a class="btn bg-green m-2 button-home"
+                                 href="/join?idh=<?= $hackathon['idhackathon'] ?>">Rejoindre</a>
+                        <?php }
+                    } ?>
+                    <?php
+                    if (!isset($_SESSION["LOGIN"])) {
+                        ?>
+                        <a class="btn bg-green m-2 button-home"
+                           href="/create-team?idh=<?= $hackathon['idhackathon'] ?>">Créer
+                            mon équipe</a>
+                    <?php } ?>
                 <?php } ?>
 
                 <a class="btn bg-green m-2 button-home" href="#" @click.prevent="getParticipants">
