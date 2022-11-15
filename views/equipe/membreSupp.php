@@ -17,6 +17,7 @@
                             class="bi bi-x-square-fill icon-x icon-delete-supp"></i></a>
             </div>
         </div>
+        <div id="msgErrorBackMembre"></div>
     <?php } ?>
 
 </div>

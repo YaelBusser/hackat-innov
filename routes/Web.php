@@ -53,9 +53,10 @@ class Web
             Route::Add("/deleteLeMembre/{id}", [$this->equipe, "meDeleteLeMembre"]);
             Route::Add("/membreSupp/", [$this->equipe, "getMembreSupp"]);
             Route::Add("/backToEquipe/{id}", [$this->equipe, "backMembreInEquipe"]);
-
             Route::Add("/deleteFromEquipe/{id}", [$this->equipe, "deleteFromEquipe"]);
+            Route::Add("/addMembre", [$this->equipe, "addMembre"]);
             Route::Add("/editEquipe", [$this->equipe, "editEquipe"]);
+
             Route::Add('/join', [$this->hackathon, 'join']);
             Route::Add('/leaveHackathon', [$this->hackathon, 'leaveHackathon']);
         }

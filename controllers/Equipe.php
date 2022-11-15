@@ -66,7 +66,13 @@ class Equipe extends WebController
 
     function backMembreInEquipe($idMembre)
     {
-        $this->membre->backMembreInEquipe($idMembre);
+        $_SESSION["errorBackMember"] = "";
+        $nbMembres = $this->equipe->getNbMembres($_SESSION["LOGIN"]["idequipe"]);
+        if ($nbMembres["membres"] < $_SESSION["LOGIN"]["nbparticipants"]) {
+            $this->membre->backMembreInEquipe($idMembre);
+        }else{
+            $_SESSION["errorBackMember"] = "Vous ne pouvez pas récupérer ce membre car le nombre maximum de membres a été atteint !";
+        }
         $this->redirect("/me");
     }
 
@@ -82,8 +88,9 @@ class Equipe extends WebController
      * @param $prenom
      * @return void
      */
-    function addMembre($nom, $prenom, $email, $tel, $dateNaissance, $portfolio): void
+    function addMembre($nom, $prenom, $email, $tel, $dateNaissance, $portfolio)
     {
+        $errorAddMembre = "";
         if (!empty($nom) && !empty($prenom) && !empty($email) && !empty($tel) && !empty($dateNaissance)) {
             $nom = htmlspecialchars($nom);
             $prenom = htmlspecialchars($prenom);
@@ -91,15 +98,22 @@ class Equipe extends WebController
             $tel = htmlspecialchars($tel);
             $dateNaissance = htmlspecialchars($dateNaissance);
             $connected = SessionHelpers::getConnected();
-            if (!empty($portfolio)) {
-                $portfolio = htmlspecialchars($portfolio);
-                $this->membre->addToEquipe($connected['idequipe'], $nom, $prenom, $email, $tel, $dateNaissance, $portfolio);
+            $nbMembres = $this->equipe->getNbMembres($_SESSION["LOGIN"]["idequipe"]);
+            if ($nbMembres["membres"] < $_SESSION["LOGIN"]["nbparticipants"]) {
+                if (!empty($portfolio)) {
+                    $portfolio = htmlspecialchars($portfolio);
+                    $this->membre->addToEquipe($connected['idequipe'], $nom, $prenom, $email, $tel, $dateNaissance, $portfolio);
+                } else {
+                    $this->membre->addToEquipe($connected['idequipe'], $nom, $prenom, $email, $tel, $dateNaissance, "");
+                }
             } else {
-                $this->membre->addToEquipe($connected['idequipe'], $nom, $prenom, $email, $tel, $dateNaissance, "");
+                $errorAddMembre = "Le nombre maximum de membres a été atteint !";
             }
+        }else{
+            $errorAddMembre = "Veuillez remplir tous les champs !";
         }
-
-        $this->redirect('/me');
+        //$this->redirect('/me');
+        return Template::render("views/equipe/addMembre.php", array("error" => $errorAddMembre), false);
     }
 
     /**
@@ -169,7 +183,7 @@ class Equipe extends WebController
         return Template::render("views/equipe/login.php", array("erreur" => $erreur));
     }
 
-    function editEquipe($nom = "", $login = "", $proto = "", $participants = "", $mdpActuel = "", $mdp = "", $mdp2 = "", )
+    function editEquipe($nom = "", $login = "", $proto = "", $participants = "", $mdpActuel = "", $mdp = "", $mdp2 = "",)
     {
         $errorEditEquipe = "";
         if (isset($nom)) {
@@ -177,30 +191,47 @@ class Equipe extends WebController
             $login = htmlspecialchars($login);
             $proto = htmlspecialchars($proto);
             $participants = htmlspecialchars($participants);
+            $participants = intval($participants);
             if (!empty($nom) && !empty($login) && !empty($proto) && !empty($participants)) {
-                if(empty($mdpActuel) && !empty($mdp) && !empty($mdp2)){
-                    $errorEditEquipe = "Vous devez d'abord renseigner votre mot de passe actuel !";
-                }
-                if (!empty($mdpActuel)) {
-                    if (password_verify($mdpActuel, $_SESSION["LOGIN"]["password"])) {
-                        if (!empty($mdp) && !empty($mdp2)) {
-                            if ($mdp == $mdp2) {
-                                $mdp = password_hash($mdp, PASSWORD_BCRYPT);
-                                $this->equipe->modifEquipe($nom, $login, $proto, $participants, $mdp, $_SESSION["LOGIN"]["idequipe"]);
-                                $_SESSION["LOGIN"]["password"] = $mdp;
-                            } else {
-                                $errorEditEquipe = "Les mots de passes doivent être identiques !";
+                $verifyTeamName = $this->equipe->verifyTeamName($nom);
+                $nbVerifyTeamName = $verifyTeamName->rowCount();
+                if ($nbVerifyTeamName == 0 || $nom == $_SESSION["LOGIN"]["nomequipe"]) {
+                    $verifyLogin = $this->equipe->verifyLogin($login);
+                    $nbverifyLogin = $verifyLogin->rowCount();
+                    if ($nbverifyLogin == 0 || $login == $_SESSION["LOGIN"]["login"]) {
+                        $nbMembres = $this->equipe->getNbMembres($_SESSION["LOGIN"]["idequipe"]);
+                        if ($nbMembres["membres"] <= $participants) {
+                            $_SESSION["LOGIN"]["nomequipe"] = $nom;
+                            $_SESSION["LOGIN"]["lienprototype"] = $proto;
+                            $_SESSION["LOGIN"]["nbparticipants"] = $participants;
+                            $_SESSION["LOGIN"]["login"] = $login;
+                            $this->equipe->modifEquipeSansMdp($nom, $login, $proto, $participants, $_SESSION["LOGIN"]["idequipe"]);
+                            if (!empty($mdpActuel)) {
+                                if (password_verify($mdpActuel, $_SESSION["LOGIN"]["password"])) {
+                                    if (!empty($mdp) && !empty($mdp2)) {
+                                        if ($mdp == $mdp2) {
+                                            $mdp = password_hash($mdp, PASSWORD_BCRYPT);
+                                            $this->equipe->modifEquipe($nom, $login, $proto, $participants, $mdp, $_SESSION["LOGIN"]["idequipe"]);
+                                            $_SESSION["LOGIN"]["password"] = $mdp;
+                                        } else {
+                                            $errorEditEquipe = "Les mots de passes doivent être identiques !";
+                                        }
+                                    }
+                                } else {
+                                    $errorEditEquipe = "Le mot de passe actuel est incorrecte !";
+                                }
                             }
+                        } else {
+                            $errorEditEquipe = "Le nombre maximum de participants est inférieur à votre nombre de membres !";
                         }
-                    }else{
-                        $errorEditEquipe = "Le mot de passe actuel est incorrecte !";
+                    } else {
+                        $errorEditEquipe = "Le login existe déjà !";
                     }
                 } else {
-                    $_SESSION["LOGIN"]["nomequipe"] = $nom;
-                    $_SESSION["LOGIN"]["lienprototype"] = $proto;
-                    $_SESSION["LOGIN"]["nbparticipants"] = $participants;
-                    $_SESSION["LOGIN"]["login"] = $login;
-                    $this->equipe->modifEquipeSansMdp($nom, $login, $proto, $participants, $_SESSION["LOGIN"]["idequipe"]);
+                    $errorEditEquipe = "Le nom de team existe déjà !";
+                }
+                if (empty($mdpActuel) && !empty($mdp) && !empty($mdp2)) {
+                    $errorEditEquipe = "Vous devez d'abord renseigner votre mot de passe actuel !";
                 }
             } else {
                 $errorEditEquipe = "Les champs ne doivent pas être vides !";

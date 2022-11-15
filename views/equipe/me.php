@@ -18,9 +18,9 @@
 
         <div class="card-actions">
             <?php
-                if($hackathon != null){
-            ?>
-            <a href="/leaveHackathon" class="btn btn-danger btn-small">Quitter l'évènement</a>
+            if ($hackathon != null) {
+                ?>
+                <a href="/leaveHackathon" class="btn btn-danger btn-small">Quitter l'évènement</a>
             <?php } ?>
             <a href="/logout" class="btn btn-danger btn-small">Déconnexion</a>
         </div>
@@ -52,9 +52,9 @@
                                type="number" min="1" max="<?= $hackathon["nbEquipMax"]; ?>"
                                value="<?= $_SESSION["LOGIN"]["nbparticipants"]; ?>">
                     </div>
-                   <?php
+                    <?php
 
-                   ?>
+                    ?>
                     <div>
                         <p><label for="mdpActuel">Mot de passe actuel</label></p>
                         <input class="form-control inputEditEquipe" name="mdpActuel" id="mdpActuel" type="password"
@@ -109,24 +109,28 @@
                 <?php } ?>
             </ul>
             <div class="formAjouter">
-                <form method="post" class="row g-1" action="/membre/add"
-                      style="width: 100%; display: flex; justify-content: center; gap: 10px">
+                <form method="post" class="row g-1"
+                      style="width: 100%; display: flex; justify-content: center; gap: 10px" id="addMembre">
                     <input required type="text" placeholder="Nom" name="nom" class="form-control"/>
                     <input required type="text" placeholder="Prénom" name="prenom" class="form-control"/>
                     <input required type="email" placeholder="Email" name="email" class="form-control"/>
                     <input required type="number" placeholder="Téléphone" name="tel" class="form-control"/>
                     <input required type="date" name="dateNaissance" class="form-control"/>
                     <input type="text" placeholder="Portfolio" name="portfolio" class="form-control">
-                    <input type="submit" value="Ajouter" name="btnAjouter"
+                    <input type="button" onclick="addMembre()" value="Ajouter" name="btnAjouter"
                            class="btn btn-success d-block form-control"/>
-                    <?php if (isset($error)) {
-                        echo $error;
-                    } ?>
+                    <div id="msgErrorAddMembre"></div>
                 </form>
             </div>
         </div>
         <p class="membres-supp" onclick="getMembreSupp()">Afficher les membres supprimés</p>
         <div id="info-membres-sup"></div>
+        <?php
+        if (!empty($_SESSION["errorBackMember"])) {
+            echo "<div class='msgError'>" . $_SESSION["errorBackMember"] . "</div>";
+        }
+        ?>
+
     </div>
 </div>
 <script>
@@ -144,6 +148,25 @@
             .then((datas) => {
                 if (datas) {
                     document.getElementById("msgErrorEditProfile").innerHTML = datas;
+                } else {
+                    location.reload();
+                }
+            });
+    }
+
+    function addMembre() {
+        const data = new URLSearchParams();
+        for (const pair of new FormData(document.getElementById("addMembre"))) {
+            data.append(pair[0], pair[1]);
+        }
+        fetch("/addMembre", {
+            method: 'post',
+            body: data,
+        })
+            .then((response) => response.text())
+            .then((datas) => {
+                if (datas) {
+                    document.getElementById("msgErrorAddMembre").innerHTML = datas;
                 } else {
                     location.reload();
                 }

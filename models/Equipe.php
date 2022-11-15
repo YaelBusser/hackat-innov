@@ -79,7 +79,7 @@ class Equipe extends SQL
             } else {
                 return null;
             }
-        }else{
+        } else {
             return null;
         }
     }
@@ -129,5 +129,24 @@ class Equipe extends SQL
     {
         $rqt = $this->getPdo()->prepare("DELETE FROM INSCRIRE WHERE idequipe = ? AND idhackathon = ?");
         $rqt->execute([$idEquipe, $idHackathon]);
+    }
+
+    public function verifyTeamName(string $nomEquipe)
+    {
+        $rqt = $this->getPdo()->prepare("SELECT nomequipe FROM EQUIPE WHERE nomequipe = ?");
+        $rqt->execute([$nomEquipe]);
+        return $rqt;
+    }
+    public function verifyLogin(string $login)
+    {
+        $rqt = $this->getPdo()->prepare("SELECT login FROM EQUIPE WHERE login = ?");
+        $rqt->execute([$login]);
+        return $rqt;
+    }
+    public function getNbMembres(int $idEquipe){
+        $rqt = $this->getPdo()->prepare("SELECT COUNT(idmembre) AS 'membres' FROM MEMBRE INNER JOIN EQUIPE ON EQUIPE.idequipe = MEMBRE.idequipe WHERE EQUIPE.idequipe = ?;");
+        $rqt->execute([$idEquipe]);
+        $fetch = $rqt->fetch();
+        return $fetch;
     }
 }
