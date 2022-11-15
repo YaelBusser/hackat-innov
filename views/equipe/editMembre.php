@@ -17,7 +17,7 @@
                        value="<?= "{$membres["email"]}"; ?>">
             </div>
             <div>
-                <p><label for="telMembre">Numéro de téléphone</label></p>
+                <p><label for="telMembre">Téléphone</label></p>
                 <input class="form-control inputEditMembre" name="telMembre" id="telMembre"
                        type="tel" pattern="[0-9]{10}" maxlength="10" minlength="10"
                        value="<?= "{$membres["telephone"]}"; ?>">

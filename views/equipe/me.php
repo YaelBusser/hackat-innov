@@ -1,5 +1,5 @@
 <link href="/public/me.css" rel="stylesheet"/>
-<div class="d-flex flex-column justify-content-center align-items-center vh-100 bg fullContainer">
+<div class="d-flex flex-column justify-content-center align-items-center vh-100 bg fullContainer" >
     <div class="card cardRadius">
         <div class="card-body">
             <h3>Bienvenue « <?= $connected['nomequipe'] ?> »
@@ -77,13 +77,16 @@
             </form>
         </div>
     </div>
-    <div class="card cardRadius mt-3">
-        <div class="card-body">
-            <h3>Membres de votre équipe</h3>
-            <ul>
-                <?php foreach ($membres as $m) { ?>
-                    <li class="member">🧑‍💻 <?= "{$m['nom']} {$m['prenom']}" ?>
-                        <span class="block-btn-modal">
+    <div style="display: flex; gap: 10px;">
+
+
+        <div class="card cardRadius mt-3">
+            <div class="card-body">
+                <h3 style="margin-bottom: 50px;">Membres de votre équipe</h3>
+                <ul>
+                    <?php foreach ($membres as $m) { ?>
+                        <li class="member">🧑‍💻 <?= "{$m['nom']} {$m['prenom']}" ?>
+                            <span class="block-btn-modal">
                             <span class="btn-modal modal-trigger-edit"
                                   onclick="getMembreEdit(<?= $m['idmembre']; ?>)">
                                 <i class="bi bi-gear icon-edit"></i>
@@ -93,40 +96,46 @@
                                 <i class="bi bi-trash icon-delete"></i>
                             </span>
                         </span>
-                    </li>
-                    <div class="modal-Edit" id="modal-Edit">
-                        <div class="close-modal modal-trigger-edit">
-                            <i class="bi bi-x-circle-fill"></i>
+                        </li>
+                        <div class="modal-Edit" id="modal-Edit">
+                            <div class="close-modal modal-trigger-edit">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </div>
+                            <h1>Modifications</h1>
+                            <p id="info-edit"></p>
                         </div>
-                        <h1>Modifications</h1>
-                        <p id="info-edit"></p>
-                    </div>
-                    <div class="modal-Delete">
-                        <div class="close-modal modal-trigger-delete">
-                            <i class="bi bi-x-circle-fill"></i>
+                        <div class="modal-Delete">
+                            <div class="close-modal modal-trigger-delete">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </div>
+                            <h1>Suppression</h1>
+                            <p id="info-delete"></p>
                         </div>
-                        <h1>Suppression</h1>
-                        <p id="info-delete"></p>
-                    </div>
-                <?php } ?>
-            </ul>
-            <div class="formAjouter">
-                <form method="post" class="row g-1"
-                      style="width: 100%; display: flex; justify-content: center; gap: 10px" id="addMembre">
-                    <input required type="text" placeholder="Nom" name="nom" class="form-control"/>
-                    <input required type="text" placeholder="Prénom" name="prenom" class="form-control"/>
-                    <input required type="email" placeholder="Email" name="email" class="form-control"/>
-                    <input required type="number" placeholder="Téléphone" name="tel" class="form-control"/>
-                    <input required type="date" name="dateNaissance" class="form-control"/>
-                    <input type="text" placeholder="Portfolio" name="portfolio" class="form-control">
-                    <input type="button" onclick="addMembre()" value="Ajouter" name="btnAjouter"
-                           class="btn btn-success d-block form-control"/>
-                    <div id="msgErrorAddMembre"></div>
-                </form>
+                    <?php } ?>
+                </ul>
             </div>
         </div>
-        <p class="membres-supp" onclick="getMembreSupp()">Afficher les membres supprimés</p>
-        <div id="info-membres-sup"></div>
+        <div class="card cardRadius mt-3">
+            <div class="card-body">
+                <h3 style="margin-bottom: 50px">Ajouter un membre</h3>
+                <div class="formAjouter">
+                    <form method="post" class="row g-1"
+                          style="width: 100%; display: flex; justify-content: center; gap: 10px" id="addMembre">
+                        <input required type="text" placeholder="Nom" name="nom" class="form-control"/>
+                        <input required type="text" placeholder="Prénom" name="prenom" class="form-control"/>
+                        <input required type="email" placeholder="Email" name="email" class="form-control"/>
+                        <input required type="number" placeholder="Téléphone" name="tel" class="form-control"/>
+                        <input required type="date" name="dateNaissance" class="form-control"/>
+                        <input type="text" placeholder="Portfolio" name="portfolio" class="form-control">
+                        <input type="button" onclick="addMembre()" value="Ajouter" name="btnAjouter"
+                               class="btn btn-success d-block form-control"/>
+                        <div id="msgErrorAddMembre"></div>
+                    </form>
+                </div>
+                <p class="membres-supp" onclick="getMembreSupp()">Afficher les membres supprimés</p>
+                <div id="info-membres-sup"></div>
+            </div>
+        </div>
     </div>
 </div>
 <script>

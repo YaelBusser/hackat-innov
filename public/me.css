@@ -29,7 +29,8 @@
 }
 h3 .btn-modal{
     position: absolute;
-    right: 30px;
+    right: 10px;
+    top: 10px;
 }
 .block-btn-modal {
     position: absolute;
@@ -42,15 +43,21 @@ h3 .btn-modal{
     padding: 0.5rem;
     margin-top: 10px;
 }
-
 .member:nth-child(odd) {
     background-color: white;
     color: black;
+    transition: ease-in-out 0.2s;
 }
-
+.member:nth-child(odd):hover{
+    background-color: rgba(255,255,255,0.5);
+}
 .member:nth-child(even) {
     background-color: black;
     color: #3aeee2;
+    transition: ease-in-out 0.2s;
+}
+.member:nth-child(even):hover{
+    background-color: rgba(0,0,0,0.8);
 }
 .member:nth-child(odd) .icon-edit{
     color: black;
