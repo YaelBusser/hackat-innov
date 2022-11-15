@@ -59,19 +59,26 @@ class Equipe extends WebController
 
     function getMembreSupp()
     {
+        $error = "";
+        $nbMembres = $this->equipe->getNbMembres($_SESSION["LOGIN"]["idequipe"]);
+        if ($nbMembres["membres"] < $_SESSION["LOGIN"]["nbparticipants"]) {
+
+        } else {
+            $error = "Vous ne pouvez pas récupérer les membres supprimés car le nombre maximum de membres a été atteint !";
+        }
         $connected = SessionHelpers::getConnected();
         $membresSupp = $this->membre->getMembreSupp($connected["idequipe"]);
-        return Template::render("views/equipe/membreSupp.php", array("membresSupp" => $membresSupp), false);
+        return Template::render("views/equipe/membreSupp.php", array("membresSupp" => $membresSupp, "error" => $error), false);
     }
 
     function backMembreInEquipe($idMembre)
     {
-        $_SESSION["errorBackMember"] = "";
+        $error = "";
         $nbMembres = $this->equipe->getNbMembres($_SESSION["LOGIN"]["idequipe"]);
         if ($nbMembres["membres"] < $_SESSION["LOGIN"]["nbparticipants"]) {
             $this->membre->backMembreInEquipe($idMembre);
         }else{
-            $_SESSION["errorBackMember"] = "Vous ne pouvez pas récupérer ce membre car le nombre maximum de membres a été atteint !";
+            $error = "Vous ne pouvez pas récupérer les membres supprimés car le nombre maximum de membres a été atteint !";
         }
         $this->redirect("/me");
     }

@@ -3,8 +3,8 @@
     <div class="card cardRadius">
         <div class="card-body">
             <h3>Bienvenue « <?= $connected['nomequipe'] ?> »
-                <span class="btn-modal modal-trigger-edit-equipe">
-                    <i class="bi bi-pen-fill icon-edit"></i>
+                <span class="btn-modal modal-trigger-edit-equipe ">
+                    <i class="bi bi-gear icon-edit"></i>
                 </span>
             </h3>
             <p>
@@ -83,13 +83,15 @@
             <ul>
                 <?php foreach ($membres as $m) { ?>
                     <li class="member">🧑‍💻 <?= "{$m['nom']} {$m['prenom']}" ?>
-                        <span class="btn-modal modal-trigger-edit"
-                              onclick="getMembreEdit(<?= $m['idmembre']; ?>)">
-                            <i class="bi bi-pen-fill icon-edit"></i>
-                        </span>
-                        <span class="btn-modal modal-trigger-delete"
-                              onclick="getMembreDelete(<?= $m["idmembre"]; ?>)">
-                            <i class="bi bi-trash-fill icon-delete"></i>
+                        <span class="block-btn-modal">
+                            <span class="btn-modal modal-trigger-edit"
+                                  onclick="getMembreEdit(<?= $m['idmembre']; ?>)">
+                                <i class="bi bi-gear icon-edit"></i>
+                            </span>
+                            <span class="btn-modal modal-trigger-delete"
+                                  onclick="getMembreDelete(<?= $m["idmembre"]; ?>)">
+                                <i class="bi bi-trash icon-delete"></i>
+                            </span>
                         </span>
                     </li>
                     <div class="modal-Edit" id="modal-Edit">
@@ -125,12 +127,6 @@
         </div>
         <p class="membres-supp" onclick="getMembreSupp()">Afficher les membres supprimés</p>
         <div id="info-membres-sup"></div>
-        <?php
-        if (!empty($_SESSION["errorBackMember"])) {
-            echo "<div class='msgError'>" . $_SESSION["errorBackMember"] . "</div>";
-        }
-        ?>
-
     </div>
 </div>
 <script>

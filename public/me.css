@@ -7,27 +7,82 @@
 }
 
 .icon-edit {
-    color: rgb(92, 184, 92);
+    color: black;
     transition: ease-in-out 0.1s;
 }
 
 .icon-edit:hover {
-    color: rgba(92, 184, 92, 0.5);
+    color: rgba(0,0,0,0.5);
 }
 
 .icon-delete {
-    color: rgb(217, 83, 79);
+    color: black;
     transition: ease-in-out 0.1s;
 }
 
 .icon-delete:hover {
-    color: rgba(217, 83, 79, 0.5);
+    color: rgba(0,0,0,0.5);
 }
 
 .btn-modal {
     cursor: pointer;
 }
+h3 .btn-modal{
+    position: absolute;
+    right: 30px;
+}
+.block-btn-modal {
+    position: absolute;
+    right: 35px;
+}
 
+.member {
+    border-radius: 10px 10px 10px 10px;
+    color: black;
+    padding: 0.5rem;
+    margin-top: 10px;
+}
+
+.member:nth-child(odd) {
+    background-color: white;
+    color: black;
+}
+
+.member:nth-child(even) {
+    background-color: black;
+    color: #3aeee2;
+}
+.member:nth-child(odd) .icon-edit{
+    color: black;
+}
+
+.member:nth-child(odd) .icon-edit:hover {
+    color: rgba(0,0,0,0.6);
+}
+
+.member:nth-child(even) .icon-edit {
+    color: #3aeee2;
+}
+
+.member:nth-child(even) .icon-edit:hover {
+    color: #29a8a0;
+}
+
+.member:nth-child(odd) .icon-delete {
+    color: black;
+}
+
+.member:nth-child(odd) .icon-delete:hover {
+    color: rgba(0,0,0,0.6);
+}
+
+.member:nth-child(even) .icon-delete {
+    color: #3aeee2;
+}
+
+.member:nth-child(even) .icon-delete:hover {
+    color: #29a8a0;
+}
 .modal-Edit {
     width: 100%;
     padding: 30px;
@@ -273,7 +328,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 
@@ -282,16 +337,24 @@ button {
     margin-top: auto;
     margin-right: auto;
 }
-.formEditEquipe input{
+
+.formEditEquipe input {
     width: 500px;
 }
-.btnModiferEquipe{
+
+.btnModiferEquipe {
     margin-left: auto;
 }
-.inputEditEquipe{
+
+.inputEditEquipe {
     max-width: 150px;
 }
-.msgError{
+
+.inputEditMembre {
+    max-width: 200px;
+}
+
+.msgError {
     color: white;
     background-color: rgba(200, 0, 0, 0.8) !important;
     padding: 1rem;
