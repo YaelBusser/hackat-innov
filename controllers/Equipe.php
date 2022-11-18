@@ -47,7 +47,7 @@ class Equipe extends WebController
         $id = intval($id);
         $errorUpdateMembre = "";
         $taillemax = 2097152;
-        $extension = array('jpg', 'gif', 'png', 'JPG', "GIF", "PNG");
+        $extension = array('jpg', 'gif', 'png', 'JPG', "GIF", "PNG", "jfif");
         if (!empty($_POST["nomMembre"]) &&
             !empty($_POST["prenomMembre"]) &&
             !empty($_POST["emailMembre"]) &&
@@ -60,8 +60,7 @@ class Equipe extends WebController
             $portfolioMembre = htmlspecialchars($_POST["portfolioMembre"]);
             $telMembre = htmlspecialchars($_POST["telMembre"]);
             $dateNaissMembre = htmlspecialchars($_POST["dateNaissMembre"]);
-            if (!empty($_FILES['avatar'])) {
-                var_dump($_FILES["avatar"]);
+            if (!empty($_FILES['avatar']) && $_FILES["avatar"]["error"] == 0) {
                 if ($_FILES['avatar']['size'] <= $taillemax) {
                     $extensionupload = strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
                     if (in_array($extensionupload, $extension)) {
@@ -73,7 +72,7 @@ class Equipe extends WebController
                             $errorUpdateMembre = "Erreur lors de l'importation de votre photo de profil !";
                         }
                     } else {
-                        $errorUpdateMembre = "L'extension de votre photo de profil invalide !";
+                        $errorUpdateMembre = "L'extension de votre photo de profil est invalide !";
                     }
                 } else {
                     $errorUpdateMembre = "Votre photo de profil ne doit pas dépasser 2 mo !";
@@ -147,7 +146,8 @@ class Equipe extends WebController
             $dateNaissance = htmlspecialchars($dateNaissance);
             $connected = SessionHelpers::getConnected();
             $nbMembres = $this->equipe->getNbMembres($_SESSION["LOGIN"]["idequipe"]);
-            if ($nbMembres["membres"] < $_SESSION["LOGIN"]["nbparticipants"]) {
+            $nbMembresMax = $this->equipe->getNbMembresMax($_SESSION["LOGIN"]["idequipe"]);
+            if ( $nbMembres["membres"] < $nbMembresMax["membres"] ) {
                 if (!empty($portfolio)) {
                     $portfolio = htmlspecialchars($portfolio);
                     $this->membre->addToEquipe($connected['idequipe'], $nom, $prenom, $email, $tel, $dateNaissance, $portfolio, "public/img/avatars/user.png");
@@ -187,7 +187,8 @@ class Equipe extends WebController
         $erreur = "";
         if (!empty($idh) && !empty($nom) && !empty($lien) && !empty($login) && !empty($password)) {
             // Création de l'équipe
-            $equipe = $this->equipe->create($nom, $lien, $login, $password);
+
+            $equipe = $this->equipe->create($nom, $lien, $login, $password, 0);
 
             if ($equipe != null) {
                 // Ajout de l'équipe dans le hackathon demandé

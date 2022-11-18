@@ -97,11 +97,11 @@ class Equipe extends SQL
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function create(mixed $nom, mixed $lien, mixed $login, mixed $password): array|null
+    public function create(mixed $nom, mixed $lien, mixed $login, mixed $password, bool $estArchive): array|null
     {
         try {
-            $stmt = $this->getPdo()->prepare("INSERT INTO EQUIPE VALUES(null, ?, ?, 0, ?, ?)");
-            $result = $stmt->execute([$nom, $lien, $login, password_hash($password, PASSWORD_BCRYPT)]);
+            $stmt = $this->getPdo()->prepare("INSERT INTO EQUIPE VALUES(null, ?, ?, 0, ?, ?, ?)");
+            $result = $stmt->execute([$nom, $lien, $login, password_hash($password, PASSWORD_BCRYPT), 0]);
 
             if ($result) {
                 return $this->getOne($this->getPdo()->lastInsertId());
@@ -137,14 +137,25 @@ class Equipe extends SQL
         $rqt->execute([$nomEquipe]);
         return $rqt;
     }
+
     public function verifyLogin(string $login)
     {
         $rqt = $this->getPdo()->prepare("SELECT login FROM EQUIPE WHERE login = ?");
         $rqt->execute([$login]);
         return $rqt;
     }
-    public function getNbMembres(int $idEquipe){
+
+    public function getNbMembres(int $idEquipe)
+    {
         $rqt = $this->getPdo()->prepare("SELECT COUNT(idmembre) AS 'membres' FROM MEMBRE INNER JOIN EQUIPE ON EQUIPE.idequipe = MEMBRE.idequipe WHERE EQUIPE.idequipe = ?;");
+        $rqt->execute([$idEquipe]);
+        $fetch = $rqt->fetch();
+        return $fetch;
+    }
+
+    public function getNbMembresMax(int $idEquipe)
+    {
+        $rqt = $this->getPdo()->prepare("SELECT nbparticipants AS 'membres' FROM EQUIPE WHERE idequipe = ?;");
         $rqt->execute([$idEquipe]);
         $fetch = $rqt->fetch();
         return $fetch;

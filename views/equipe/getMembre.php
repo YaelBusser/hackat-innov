@@ -2,9 +2,12 @@
     <form method="POST" id="formEditMembre" enctype="multipart/form-data">
         <div class="formEditEquipe">
             <h1>Modifications</h1>
-            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+            <div style="position: relative; display: flex; justify-content: center; align-items: center">
+                <div class="block-btn-avatar">
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <input type="file" name="avatar" class="input-avatar" id="avatar">
+                </div>
                 <img src="<?= $membres['avatar']; ?>">
-                <input type="file" name="avatar" class="input-avatar">
             </div>
             <div>
                 <p><label for="nomMembre">Nom</label></p>
@@ -29,7 +32,8 @@
             <div>
                 <p><label for="telMembre">Téléphone</label></p>
                 <input class="form-control inputEditMembre" name="telMembre" id="telMembre"
-                       type="tel" pattern="[0-9]{10}" maxlength="10" minlength="10"
+                       type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                       maxlength="10" minlength="10"
                        value="<?= "{$membres["telephone"]}"; ?>">
             </div>
             <div>
@@ -37,7 +41,8 @@
                 <input class="form-control inputEditMembre" name="dateNaissMembre" id="dateNaissMembre" type="date"
                        value="<?= "{$membres["datenaissance"]}"; ?>">
             </div>
-            <input type="button" onclick="editMembre(<?= $membres['idmembre']; ?>)" value="Modifier" name="btnModifierMembre"
+            <input type="button" onclick="editMembre(<?= $membres['idmembre']; ?>)" value="Modifier"
+                   name="btnModifierMembre"
                    class="btn btn-success d-block form-control btnModiferEquipe" id="btnEditEquipe"/>
         </div>
         <div id="msgErrorEditMembre"></div>

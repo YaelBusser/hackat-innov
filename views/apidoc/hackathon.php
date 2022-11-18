@@ -25,6 +25,7 @@
                             <a class="btn btn-sm btn-primary" href="<?= "/sample/equipes?idh={$hackaton['idhackathon']}" ?>">
                                 Les équipes
                             </a>
+                            <i class="bi bi-graph-up"></i>
                         </td>
                     </tr>
                 <?php } ?>

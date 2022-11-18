@@ -58,7 +58,7 @@
                     <div>
                         <p><label for="participants">Nombre de participants</label></p>
                         <input class="form-control inputEditEquipe" name="participants" id="participants"
-                               type="number" min="1" max="<?= $hackathon["nbEquipMax"]; ?>"
+                               type="number" min="1" max="<?= $hackathon["nbMembreMax"]; ?>"
                                value="<?= $_SESSION["LOGIN"]["nbparticipants"]; ?>">
                     </div>
                     <?php
@@ -132,7 +132,8 @@
                         <input required type="text" placeholder="Nom" name="nom" class="form-control"/>
                         <input required type="text" placeholder="Prénom" name="prenom" class="form-control"/>
                         <input required type="email" placeholder="Email" name="email" class="form-control"/>
-                        <input required type="number" placeholder="Téléphone" name="tel" class="form-control"/>
+                        <input required type="tel" placeholder="Téléphone" name="tel" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="10"
+                               minlength="10" class="form-control" />
                         <input required type="date" name="dateNaissance" class="form-control"/>
                         <input type="text" placeholder="Portfolio" name="portfolio" class="form-control">
                         <input type="button" onclick="addMembre()" value="Ajouter" name="btnAjouter"
@@ -168,10 +169,11 @@
     }
 
     function editMembre(idmembre) {
-        const data = new URLSearchParams();
+        const data = new FormData();
         for (const pair of new FormData(document.getElementById("formEditMembre"))) {
             data.append(pair[0], pair[1]);
         }
+
         fetch("/editMembre/" + idmembre, {
             method: 'post',
             body: data,

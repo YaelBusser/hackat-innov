@@ -12,7 +12,7 @@
 }
 
 .icon-edit:hover {
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .icon-delete {
@@ -21,17 +21,19 @@
 }
 
 .icon-delete:hover {
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .btn-modal {
     cursor: pointer;
 }
-h3 .btn-modal{
+
+h3 .btn-modal {
     position: absolute;
     right: 10px;
     top: 10px;
 }
+
 .block-btn-modal {
     position: absolute;
     right: 35px;
@@ -47,28 +49,33 @@ h3 .btn-modal{
     align-items: center;
     gap: 10px;
 }
+
 .member:nth-child(odd) {
     background-color: white;
     color: black;
     transition: ease-in-out 0.2s;
 }
-.member:nth-child(odd):hover{
-    background-color: rgba(255,255,255,0.5);
+
+.member:nth-child(odd):hover {
+    background-color: rgba(255, 255, 255, 0.5);
 }
+
 .member:nth-child(even) {
     background-color: black;
     color: #3aeee2;
     transition: ease-in-out 0.2s;
 }
-.member:nth-child(even):hover{
-    background-color: rgba(0,0,0,0.8);
+
+.member:nth-child(even):hover {
+    background-color: rgba(0, 0, 0, 0.8);
 }
-.member:nth-child(odd) .icon-edit{
+
+.member:nth-child(odd) .icon-edit {
     color: black;
 }
 
 .member:nth-child(odd) .icon-edit:hover {
-    color: rgba(0,0,0,0.6);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .member:nth-child(even) .icon-edit {
@@ -84,7 +91,7 @@ h3 .btn-modal{
 }
 
 .member:nth-child(odd) .icon-delete:hover {
-    color: rgba(0,0,0,0.6);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .member:nth-child(even) .icon-delete {
@@ -94,6 +101,7 @@ h3 .btn-modal{
 .member:nth-child(even) .icon-delete:hover {
     color: #29a8a0;
 }
+
 .modal-Edit {
     width: 100%;
     padding: 30px;
@@ -129,6 +137,7 @@ h3 .btn-modal{
     opacity: 1;
     z-index: 3;
 }
+
 .modal-Leave-Hackathon {
     width: 100%;
     height: 100%;
@@ -151,12 +160,14 @@ h3 .btn-modal{
     opacity: 1;
     z-index: 3;
 }
-.modal-Leave-Hackathon-body{
+
+.modal-Leave-Hackathon-body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+
 .modal-Delete {
     width: 100%;
     padding: 30px;
@@ -354,19 +365,23 @@ button {
 .recup-membre {
     font-size: 10px;
 }
+
 .formEditEquipe {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.formEditEquipe h1{
+
+.formEditEquipe h1 {
     font-size: 30px;
 }
-.formEditEquipe img{
+
+.formEditEquipe img {
     max-width: 110px;
     min-width: 110px;
     border-radius: 100%;
 }
+
 .formEditEquipe div {
     display: flex;
     align-items: center;
@@ -404,12 +419,40 @@ button {
     border-radius: 5px 5px 5px 5px;
 }
 
-.avatar-user{
+.avatar-user {
     min-width: 30px;
     max-width: 30px;
     border-radius: 100%;
 }
-.input-avatar{
+
+.input-avatar {
     font-size: 10px;
-    max-width: 200px;
+    max-width: 20px;
+}
+
+.block-btn-avatar {
+    position: absolute;
+    cursor: pointer;
+    right: 110px;
+    top: 10px;
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-radius: 100%;
+}
+
+.block-btn-avatar input {
+    z-index: 2;
+    cursor: pointer;
+    opacity: 0;
+    border: none;
+    padding: 1rem;
+    border-radius: 100%;
+    height: 10px;
+}
+
+.block-btn-avatar i {
+    cursor: pointer;
+    z-index: 1;
+    position: absolute;
+    color: rgb(15, 106, 15);
+    font-size: 2rem;
 }
