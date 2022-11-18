@@ -1,5 +1,5 @@
 <link href="/public/me.css" rel="stylesheet"/>
-<div class="d-flex flex-column justify-content-center align-items-center vh-100 bg fullContainer" >
+<div class="d-flex flex-column justify-content-center align-items-center vh-100 bg fullContainer">
     <div class="card cardRadius">
         <div class="card-body">
             <h3>Bienvenue « <?= $connected['nomequipe'] ?> »
@@ -20,7 +20,16 @@
             <?php
             if ($hackathon != null) {
                 ?>
-                <a href="/leaveHackathon" class="btn btn-danger btn-small">Quitter l'évènement</a>
+                <span class="btn btn-danger btn-small modal-trigger-leave-hackathon">Quitter l'évènement</span>
+                <div id="modal-Leave-Hackathon" class="modal-Leave-Hackathon">
+                    <div class="close-modal modal-trigger-leave-hackathon">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </div>
+                    <div class="modal-Leave-Hackathon-body">
+                        <p>Voulez-vous vraiment quitter l'hackathon ?</p>
+                        <a href="/leaveHackathon" class="btn btn-danger btn-small">Quitter l'évènement</a>
+                    </div>
+                </div>
             <?php } ?>
             <a href="/logout" class="btn btn-danger btn-small">Déconnexion</a>
         </div>
@@ -78,31 +87,30 @@
         </div>
     </div>
     <div style="display: flex; gap: 10px;">
-
-
         <div class="card cardRadius mt-3">
             <div class="card-body">
                 <h3 style="margin-bottom: 50px;">Membres de votre équipe</h3>
                 <ul>
                     <?php foreach ($membres as $m) { ?>
-                        <li class="member">🧑‍💻 <?= "{$m['nom']} {$m['prenom']}" ?>
+                        <li class="member">
+                            <img class="avatar-user" src="<?= $m['avatar']; ?>">
+                            <?= "{$m['nom']} {$m['prenom']}" ?>
                             <span class="block-btn-modal">
-                            <span class="btn-modal modal-trigger-edit"
-                                  onclick="getMembreEdit(<?= $m['idmembre']; ?>)">
-                                <i class="bi bi-gear icon-edit"></i>
+                                <span class="btn-modal modal-trigger-edit"
+                                      onclick="getMembreEdit(<?= $m['idmembre']; ?>)">
+                                    <i class="bi bi-gear icon-edit"></i>
+                                </span>
+                                <span class="btn-modal modal-trigger-delete"
+                                      onclick="getMembreDelete(<?= $m["idmembre"]; ?>)">
+                                    <i class="bi bi-trash icon-delete"></i>
+                                </span>
                             </span>
-                            <span class="btn-modal modal-trigger-delete"
-                                  onclick="getMembreDelete(<?= $m["idmembre"]; ?>)">
-                                <i class="bi bi-trash icon-delete"></i>
-                            </span>
-                        </span>
                         </li>
                         <div class="modal-Edit" id="modal-Edit">
                             <div class="close-modal modal-trigger-edit">
                                 <i class="bi bi-x-circle-fill"></i>
                             </div>
-                            <h1>Modifications</h1>
-                            <p id="info-edit"></p>
+                            <div id="info-edit"></div>
                         </div>
                         <div class="modal-Delete">
                             <div class="close-modal modal-trigger-delete">
@@ -159,6 +167,26 @@
             });
     }
 
+    function editMembre(idmembre) {
+        const data = new URLSearchParams();
+        for (const pair of new FormData(document.getElementById("formEditMembre"))) {
+            data.append(pair[0], pair[1]);
+        }
+        fetch("/editMembre/" + idmembre, {
+            method: 'post',
+            body: data,
+        })
+            .then((response) => response.text())
+            .then((datas) => {
+                if (datas) {
+                    document.getElementById("msgErrorEditMembre").innerHTML = datas;
+                } else {
+                    location.reload();
+                }
+            });
+    }
+
+
     function addMembre() {
         const data = new URLSearchParams();
         for (const pair of new FormData(document.getElementById("addMembre"))) {
@@ -190,6 +218,10 @@
     const modalTriggersDelete = document.querySelectorAll(".modal-trigger-delete");
     modalTriggersDelete.forEach(triggerDelete => triggerDelete.addEventListener("click", toggleModalDelete));
 
+    const modalLeaveHackathon = document.querySelector(".modal-Leave-Hackathon");
+    const modalTriggersLeaveHackathon = document.querySelectorAll(".modal-trigger-leave-hackathon");
+    modalTriggersLeaveHackathon.forEach(triggerLeaveHackathon => triggerLeaveHackathon.addEventListener("click", toggleModalLeaveHackathon));
+
     function toggleModalEditEquipe() {
         modalEditEquipe.classList.toggle("active");
     }
@@ -202,8 +234,12 @@
         modalDelete.classList.toggle("active");
     }
 
+    function toggleModalLeaveHackathon() {
+        modalLeaveHackathon.classList.toggle("active");
+    }
+
     function getMembreEdit(idmembre) {
-        fetch("/editMembre/" + idmembre)
+        fetch("/membre/" + idmembre)
             .then((response) => response.text())
             .then((datas) => {
                 document.getElementById("info-edit").innerHTML = datas;

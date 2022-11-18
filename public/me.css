@@ -42,6 +42,10 @@ h3 .btn-modal{
     color: black;
     padding: 0.5rem;
     margin-top: 10px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .member:nth-child(odd) {
     background-color: white;
@@ -98,7 +102,6 @@ h3 .btn-modal{
     top: 0;
     left: 0;
     border-radius: 10px 10px 10px 10px;
-    height: 100%;
     opacity: 0;
     z-index: -1;
     transition: ease-in-out 0.2s;
@@ -126,7 +129,34 @@ h3 .btn-modal{
     opacity: 1;
     z-index: 3;
 }
+.modal-Leave-Hackathon {
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px 10px 10px 10px;
+    opacity: 0;
+    z-index: -1;
+    transition: ease-in-out 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
+.modal-Leave-Hackathon.active {
+    opacity: 1;
+    z-index: 3;
+}
+.modal-Leave-Hackathon-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .modal-Delete {
     width: 100%;
     padding: 30px;
@@ -324,13 +354,19 @@ button {
 .recup-membre {
     font-size: 10px;
 }
-
 .formEditEquipe {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-
+.formEditEquipe h1{
+    font-size: 30px;
+}
+.formEditEquipe img{
+    max-width: 110px;
+    min-width: 110px;
+    border-radius: 100%;
+}
 .formEditEquipe div {
     display: flex;
     align-items: center;
@@ -366,4 +402,14 @@ button {
     background-color: rgba(200, 0, 0, 0.8) !important;
     padding: 1rem;
     border-radius: 5px 5px 5px 5px;
+}
+
+.avatar-user{
+    min-width: 30px;
+    max-width: 30px;
+    border-radius: 100%;
+}
+.input-avatar{
+    font-size: 10px;
+    max-width: 200px;
 }

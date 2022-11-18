@@ -6,7 +6,7 @@
         <form action="/connexionApi" method="post" id="formContent">
             <!-- Icon -->
             <div class="fadeIn first">
-                <img src="/public/img/user.png" class="icon" id="icon" alt="User Icon"/>
+                <img src="/public/img/avatars/user.png" class="icon" id="icon" alt="User Icon"/>
             </div>
             <?php if (!empty($errorApi)) { ?>
                 <div class="alert alert-danger" role="alert"><?= $errorApi ?></div>
