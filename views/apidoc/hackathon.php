@@ -22,7 +22,7 @@
                         <td><?= $hackaton['lieu'] ?></td>
                         <td><?= $hackaton['dateheuredebuth'] ?></td>
                         <td><?= $hackaton['dateheurefinh'] ?></td>
-                        <td>
+                        <td style="display: flex; gap: 10px; align-items: center">
                             <a class="btn btn-sm btn-primary"
                                href="<?= "/sample/equipes?idh={$hackaton['idhackathon']}" ?>">
                                 Les équipes
