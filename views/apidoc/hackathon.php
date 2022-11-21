@@ -1,3 +1,4 @@
+<link href="/public/api.css" rel="stylesheet"/>
 <div class="d-flex flex-column justify-content-center vh-100 align-items-center">
     <div class="card col-xl-7  col-lg-9 col-md-10 col-12">
         <div class="card-body">
@@ -22,10 +23,12 @@
                         <td><?= $hackaton['dateheuredebuth'] ?></td>
                         <td><?= $hackaton['dateheurefinh'] ?></td>
                         <td>
-                            <a class="btn btn-sm btn-primary" href="<?= "/sample/equipes?idh={$hackaton['idhackathon']}" ?>">
+                            <a class="btn btn-sm btn-primary"
+                               href="<?= "/sample/equipes?idh={$hackaton['idhackathon']}" ?>">
                                 Les équipes
                             </a>
-                            <i class="bi bi-graph-up"></i>
+                            <a href="/sample/hackathon/stats/<?= $hackaton['idhackathon']; ?>"><i
+                                        class="bi bi-graph-up"></i></a>
                         </td>
                     </tr>
                 <?php } ?>

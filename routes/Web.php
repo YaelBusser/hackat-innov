@@ -35,6 +35,7 @@ class Web
         if (isset($_SESSION["admin"])) {
             Route::Add('/sample/', [$this->apiDoc, 'liste']);
             Route::Add('/sample/hackathons', [$this->apiDoc, 'listeHackathons']);
+            Route::Add('/sample/hackathon/stats/{idhackathon}', [$this->apiDoc, 'statHackathon']);
             Route::Add('/sample/ateliers', [$this->apiDoc, 'listeAteliers']);
             Route::Add('/sample/membres', [$this->apiDoc, 'listeMembres']);
             Route::Add('/sample/equipes', [$this->apiDoc, 'listeEquipes']);

@@ -1,0 +1,42 @@
+.modal-Stat-Hackathon {
+    width: 600px;
+    height: 600px;
+    max-height: 600px;
+    max-width: 600px;
+    padding: 30px;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 10px 10px 10px 10px;
+    opacity: 0;
+    z-index: -1;
+    transition: ease-in-out 0.2s;
+    margin: auto;
+    box-shadow: 0px 0px 20px black;
+}
+
+.modal-Stat-Hackathon.active {
+    opacity: 1;
+    z-index: 3;
+}
+.bi-graph-up{
+    cursor: pointer;
+}
+.stat-hackathon{
+    max-width: 500px;
+    max-height: 500px;
+    margin: auto;
+    margin-top: 100px;
+}
+.titreHackathon{
+    text-align: center;
+}
+.txt-stats{
+    text-decoration: underline;
+}
+#myChart{
+}

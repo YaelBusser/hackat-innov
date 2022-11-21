@@ -92,4 +92,8 @@ class ApiDoc extends WebController
 
         return Template::render("views/apidoc/equipe.php", array('data' => $data, 'hackathon' => $hackathon));
     }
+    function statHackathon(int $idhackathon){
+        $inscrire = $this->hackatons->getInscrire($idhackathon);
+        return Template::render("views/apidoc/statHackathon.php", array("hackathon" => $this->hackatons->getOne($idhackathon), "inscrire" => $inscrire));
+    }
 }
