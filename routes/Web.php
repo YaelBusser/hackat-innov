@@ -26,7 +26,10 @@ class Web
         $this->apiDoc = new ApiDoc();
 
         Route::Add('/', [$this->main, 'home']);
+        Route::Add('/gcu', [$this->main, 'gcu']);
         Route::Add('/about', [$this->main, 'about']);
+        Route::Add('/aboutHackathon/{idhackathon}', [$this->main, 'aboutHackathon']);
+        Route::Add('/statspublic', [$this->main, 'statspublic']);
         Route::Add('/login', [$this->equipe, 'login']);
         Route::Add('/create-team', [$this->equipe, 'create']);
         // Liste des routes de la partie API

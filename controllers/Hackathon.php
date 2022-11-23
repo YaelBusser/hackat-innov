@@ -20,6 +20,7 @@ class Hackathon extends WebController
      */
     function join(string $idh = ""): void
     {
+        $this->hackathon->nbVisites();
         $hackathonIsOpen = $this->hackathon->getHackathonIsOpen($idh);
         $dateNow = $this->hackathon->getDateNow();
         if (($hackathonIsOpen['nbEquip'] >= $hackathonIsOpen['nbEquipMax']) || ($dateNow['date'] >= $hackathonIsOpen['dateFinInscription'])) {
@@ -41,6 +42,7 @@ class Hackathon extends WebController
         $this->redirect('/me');
     }
     function leaveHackathon(){
+        $this->hackathon->nbVisites();
         $idEquipe = $_SESSION["LOGIN"]["idequipe"];
         $idHackthon = $_SESSION["hackathonActuel"]["idhackathon"];
         $this->equipe->leaveHackathon($idEquipe, $idHackthon);

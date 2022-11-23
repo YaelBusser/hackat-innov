@@ -28,6 +28,7 @@ class Equipe extends WebController
      */
     function me(): string
     {
+        $this->hackathon->nbVisites();
         $connected = SessionHelpers::getConnected();
         $relatedHackathon = $this->hackathon->getHackathonForTeamId($connected['idequipe']);
         $_SESSION["hackathonActuel"] = $relatedHackathon;
@@ -175,6 +176,7 @@ class Equipe extends WebController
      */
     function create($idh = "", $nom = "", $lien = "", $login = "", $password = ""): string
     {
+        $this->hackathon->nbVisites();
         // Si pas d'Id de passé en paramètre alors redirection en home
         if (!$idh) {
             $this->redirect("/");
@@ -211,6 +213,7 @@ class Equipe extends WebController
      */
     function login($login = "", $password = ""): string
     {
+        $this->hackathon->nbVisites();
         if (SessionHelpers::isLogin()) {
             $this->redirect("/");
         }

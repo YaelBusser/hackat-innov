@@ -51,6 +51,12 @@ use routes\base\Route;
             <li class="nav-item"><a href="/about"
                                     class="nav-link white-link <?= Route::isActivePath('/about', 'active-link') ?>"">About</a>
             </li>
+            <li class="nav-item"><a href="/gcu"
+                                    class="nav-link white-link <?= Route::isActivePath('/gcu', 'active-link') ?>"">GCU</a>
+            </li>
+            <li class="nav-item"><a href="/statspublic"
+                                    class="nav-link white-link <?= Route::isActivePath('/statspublic', 'active-link') ?>"">Statistiques</a>
+            </li>
             <li class="flex-grow-1"></li>
 
             <?php if (!\utils\SessionHelpers::isLogin()) { ?>

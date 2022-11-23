@@ -27,6 +27,7 @@ class ApiDoc extends WebController
 
     function connexionApi(): string
     {
+        $this->hackatons->nbVisites();
         $errorApi = "";
         if (isset($_POST["btnAdmin"])) {
             if (!empty(["login"]) && !empty($_POST["password"])) {
@@ -57,16 +58,19 @@ class ApiDoc extends WebController
 
     function liste(): string
     {
+        $this->hackatons->nbVisites();
         return Template::render("views/apidoc/liste.php");
     }
 
     function listeHackathons(): string
     {
+        $this->hackatons->nbVisites();
         return Template::render("views/apidoc/hackathon.php", array('data' => $this->hackatons->getAll()));
     }
 
     function listeMembres(string $idequipe = ""): string
     {
+        $this->hackatons->nbVisites();
         $lequipe = null;
         if ($idequipe != "") {
             // Récupération de l'équipe passé en paramètre
@@ -81,6 +85,7 @@ class ApiDoc extends WebController
 
     function listeEquipes(string $idh = ""): string
     {
+        $this->hackatons->nbVisites();
         $hackathon = null;
         if ($idh != "") {
             // Récupération de l'équipe passé en paramètre
@@ -93,6 +98,7 @@ class ApiDoc extends WebController
         return Template::render("views/apidoc/equipe.php", array('data' => $data, 'hackathon' => $hackathon));
     }
     function statHackathon(int $idhackathon){
+        $this->hackatons->nbVisites();
         $inscrire = $this->hackatons->getInscrire($idhackathon);
         return Template::render("views/apidoc/statHackathon.php", array("hackathon" => $this->hackatons->getOne($idhackathon), "inscrire" => $inscrire));
     }

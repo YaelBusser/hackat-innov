@@ -15,6 +15,7 @@
                     au <?= date_create($hackathon['dateheurefinh'])->format("d/m/Y H:i") ?></div>
                 <div><em>Lieu :</em> <?= $hackathon['ville'] ?></div>
                 <div><em>Organisateur :</em> <?= "{$organisateur['nom']} {$organisateur['prenom']}" ?></div>
+                <div><em>Nombre de places :</em> <?= "<b>{$nbEquipe['nbequipe']}</b>/<b>{$hackathon['nbEquipMax']}</b>" ?></div>
             </div>
             <?php
             if (($hackathonIsOpen['nbEquip'] >= $hackathonIsOpen['nbEquipMax']) && ($dateNow['date'] >= $hackathonIsOpen['dateFinInscription'])) {
