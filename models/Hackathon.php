@@ -53,7 +53,7 @@ class Hackathon extends SQL
 
     public function joinHackathon(string $idH, string $idE): bool
     {
-        $stmt = $this->getPdo()->prepare("INSERT INTO INSCRIRE VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE dateinscription = NOW()");
+        $stmt = $this->getPdo()->prepare("INSERT INTO INSCRIRE VALUES (?, ?, NOW(), NULL)");
         return $stmt->execute([$idH, $idE]);
     }
 
