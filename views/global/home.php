@@ -12,10 +12,11 @@
             <div class="card">
                 <div>Informations :</div>
                 <div><em>Date :</em> <?= date_create($hackathon['dateheuredebuth'])->format("d/m/Y H:i") ?>
-                    au <?= date_create($hackathon['dateheurefinh'])->format("d/m/Y H:i") ?></div>
+                    au <?= date_create($hackathon['dateheurefinh'])->format("d/m/Y H:i"); ?></div>
                 <div><em>Lieu :</em> <?= $hackathon['ville'] ?></div>
                 <div><em>Organisateur :</em> <?= "{$organisateur['nom']} {$organisateur['prenom']}" ?></div>
                 <div><em>Nombre de places :</em> <?= "<b>{$nbEquipe['nbequipe']}</b>/<b>{$hackathon['nbEquipMax']}</b>" ?></div>
+                <div><em>Date butoire :</em> <?= date_create($hackathon["dateFinInscription"])->format("d/m/Y"); ?></div>
             </div>
             <?php
             if (($hackathonIsOpen['nbEquip'] >= $hackathonIsOpen['nbEquipMax']) && ($dateNow['date'] >= $hackathonIsOpen['dateFinInscription'])) {
