@@ -173,7 +173,6 @@
         for (const pair of new FormData(document.getElementById("formEditMembre"))) {
             data.append(pair[0], pair[1]);
         }
-
         fetch("/editMembre/" + idmembre, {
             method: 'post',
             body: data,
