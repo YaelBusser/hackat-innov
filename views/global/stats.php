@@ -1,5 +1,23 @@
 <link href="/public/stats.css" rel="stylesheet"/>
 <h1>Statistiques</h1>
+<div class="stat-site-small">
+    <div>
+        <h2>Nombre total d'équipes : <b><?= $nbEquipe["nbEquipe"]; ?></b></h2>
+        <canvas id="membres"></canvas>
+    </div>
+</div>
+<div class="stat-site-small">
+    <div>
+        <h2>Nombre total de membres : <b><?= $nbMembre["nbMembre"]; ?></b></h2>
+        <canvas id="membres"></canvas>
+    </div>
+</div>
+<div class="stat-site-small">
+    <div>
+        <h2>Nombre total d'hackathons : <b><?= $nbHackathon["nbHackathon"]; ?></b></h2>
+        <canvas id="membres"></canvas>
+    </div>
+</div>
 <div class="stat-site">
     <div>
         <h2>Nombre de pages visitées en fonction de la date :</h2>
@@ -10,18 +28,6 @@
     <div>
         <h2>Age moyen des équipes par hackathon :</h2>
         <canvas id="age"></canvas>
-    </div>
-</div>
-<div class="stat-site">
-    <div>
-        <h2>Nombre total de membres en fonction de la date :</h2>
-        <canvas id="membres"></canvas>
-    </div>
-</div>
-<div class="stat-site">
-    <div>
-        <h2>Nombre total d'équipes inscrites : <b><?= $nbEquipe["nbEquipe"]; ?></b></h2>
-        <canvas id="membres"></canvas>
     </div>
 </div>
 <script>

@@ -80,4 +80,11 @@ class Membre extends SQL
         $rqt = $this->getPdo()->prepare("UPDATE MEMBRE SET nom = ?, prenom = ?, email = ?, telephone = ?, datenaissance = ?, lienportfolio = ?, avatar = ? WHERE idmembre = ?");
         $rqt->execute([$nom, $prenom, $email, $telephone, $dateNaissance, $portfolio, $avatar, $idmembre]);
     }
+
+    public function getNbMembre(){
+        $rqt = $this->getPdo()->prepare("SELECT COUNT(idmembre) AS 'nbMembre' FROM MEMBRE;");
+        $rqt->execute();
+        $fetch = $rqt->fetch();
+        return $fetch;
+    }
 }

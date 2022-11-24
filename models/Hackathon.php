@@ -118,4 +118,11 @@ class Hackathon extends SQL
         $fetch = $rqt->fetchAll();
         return $fetch;
     }
+
+    public function getNbHakckathon(){
+        $rqt = $this->getPdo()->prepare("SELECT COUNT(idhackathon) AS 'nbHackathon' FROM HACKATHON;");
+        $rqt->execute();
+        $fetch = $rqt->fetch();
+        return $fetch;
+    }
 }
