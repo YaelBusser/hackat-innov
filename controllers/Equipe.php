@@ -31,6 +31,11 @@ class Equipe extends WebController
         $this->hackathon->nbVisites();
         $connected = SessionHelpers::getConnected();
         $relatedHackathon = $this->hackathon->getHackathonForTeamId($connected['idequipe']);
+        $equipe = $this->equipe->getOne($connected["idequipe"]);
+        $_SESSION["LOGIN"]["nomequipe"] = $equipe["nomequipe"];
+        $_SESSION["LOGIN"]["login"] = $equipe["login"];
+        $_SESSION["LOGIN"]["lienprototype"] = $equipe["lienprototype"];
+        $_SESSION["LOGIN"]["nbparticipants"] = $equipe["nbparticipants"];
         $_SESSION["hackathonActuel"] = $relatedHackathon;
         $membres = $this->membre->getByIdEquipe($connected['idequipe']);
         return Template::render("views/equipe/me.php", array('hackathon' => $relatedHackathon, 'connected' => $connected, "membres" => $membres));

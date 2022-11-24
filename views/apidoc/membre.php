@@ -1,4 +1,4 @@
-<div class="d-flex flex-column justify-content-center vh-100 align-items-center">
+<div class="d-flex flex-column justify-content-center align-items-center" style="margin-top: 100px">
     <div class="card col-xl-7  col-lg-9 col-md-10 col-12">
         <div class="card-body">
             <h5 class="card-title">

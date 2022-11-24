@@ -23,6 +23,13 @@ class Equipe extends SQL
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    function getNbEquipe(): array|null
+    {
+        $stmt = $this->getPdo()->prepare("SELECT COUNT(idequipe) AS 'nbEquipe' FROM EQUIPE; ");
+        $stmt->execute([]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
     /**
      * Créer un une équipe en base de données.
      * @param string $nomequipe

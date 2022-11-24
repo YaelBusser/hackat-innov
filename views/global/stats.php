@@ -12,6 +12,18 @@
         <canvas id="age"></canvas>
     </div>
 </div>
+<div class="stat-site">
+    <div>
+        <h2>Nombre total de membres en fonction de la date :</h2>
+        <canvas id="membres"></canvas>
+    </div>
+</div>
+<div class="stat-site">
+    <div>
+        <h2>Nombre total d'équipes inscrites : <b><?= $nbEquipe["nbEquipe"]; ?></b></h2>
+        <canvas id="membres"></canvas>
+    </div>
+</div>
 <script>
     const vues = document.getElementById('vues');
     new Chart(vues, {

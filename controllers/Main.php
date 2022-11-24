@@ -5,6 +5,7 @@ namespace controllers;
 use controllers\base\WebController;
 use models\Hackathon;
 use models\Organisateur;
+use models\Equipe;
 use utils\Template;
 
 /**
@@ -14,11 +15,13 @@ class Main extends WebController
 {
     private Hackathon $hackathon;
     private Organisateur $organisateur;
+    private Equipe $equipe;
 
     public function __construct()
     {
         $this->hackathon = new Hackathon();
         $this->organisateur = new Organisateur();
+        $this->equipe = new Equipe();
     }
 
     function home(): string
@@ -58,6 +61,7 @@ class Main extends WebController
         $this->hackathon->nbVisites();
         $visites = $this->hackathon->getNbVisites();
         $avgAge = $this->hackathon->getAvgAgeByHackathon();
-        return Template::render("views/global/stats.php", array("visites" => $visites, "avgAge" => $avgAge));
+        $nbEquipeTotal = $this->equipe->getNbEquipe();
+        return Template::render("views/global/stats.php", array("visites" => $visites, "avgAge" => $avgAge, "nbEquipe" => $nbEquipeTotal));
     }
 }
